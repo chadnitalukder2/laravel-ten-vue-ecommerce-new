@@ -4,7 +4,7 @@
               <div class="card_categories">
         
                <div class="card-categories-image">
-                <a href="#">
+                <a href="#" >
                   <img class="image" :src="props.brand.brand_img" alt="Blouses Shirts">
                 </a>
                 </div>

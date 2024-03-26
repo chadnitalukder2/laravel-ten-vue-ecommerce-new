@@ -33,7 +33,7 @@ const getProduct = async () => {
     <div class="product-card">
         <div class="badge">Hot</div>
         <div class="product-tumb">
-            <router-link :to="{ name: 'product-details', params: { id: props.product.id }}" >
+            <router-link :to="{ name: 'product-details', params: { id: props.product.id }}" style=" width: 100%; height: 100%;" >
             <img :src=" props.product.product_img" alt="">
             </router-link>
         </div>
@@ -97,7 +97,7 @@ a {
 .product-tumb {
     display: flex;
     justify-content: center;
-    height: 320px;
+    height: 300px;
     width: 100%;
     overflow: hidden;
     border-radius: 5px 5px 0px 0px;
@@ -111,6 +111,7 @@ a {
 
 .product-details {
     padding: 20px ;
+    padding-bottom: 10px;
 
 }
 
