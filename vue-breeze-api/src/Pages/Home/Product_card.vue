@@ -1,4 +1,5 @@
 <script setup>
+import '@fortawesome/fontawesome-free/css/all.css';
 import {
     defineProps
 } from "vue";
@@ -36,6 +37,11 @@ const getProduct = async () => {
             <router-link :to="{ name: 'product-details', params: { id: props.product.id }}" style=" width: 100%; height: 100%;" >
             <img :src=" props.product.product_img" alt="">
             </router-link>
+        </div>
+        <div class="product_cart">
+            <p class="cart"><i class="fa-solid fa-cart-shopping"></i></p>
+            <p class="view"><i class="fa-solid fa-eye"></i></p>
+            <p class="wish_list"><i class="fa-solid fa-heart"></i></p>
         </div>
         <div class="product-details">
             <span class="product-catagory">{{ props.product.brand.brand_name  }}, {{ props.product.category.category_name }}</span>
@@ -77,8 +83,19 @@ a {
     position: relative;
     border-radius: 8px;
     border: 1px solid #e4e4e4 ;
+    transition: all 0.5s;
     &:hover{
         box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.1);
+        .product-tumb img{
+            background: transparent;
+            transform: scale(1.25);
+        }
+        .product_cart{
+            right: 0;
+            visibility: visible;
+            opacity: 9;
+        }
+
     }
 }
 
@@ -97,18 +114,63 @@ a {
 .product-tumb {
     display: flex;
     justify-content: center;
-    height: 300px;
+    height: 330px;
     width: 100%;
     overflow: hidden;
     border-radius: 5px 5px 0px 0px;
     background: #f0f0f0;
+    position: relative;
 }
 
 .product-tumb img {
     width: 100%;
     height: 100%;
+    transition: all 0.5s;
 }
+.product_cart{
+    position: absolute;
+    top: 0px;
+    right: -50px;
+    padding: 15px;
+    transition: all 0.5s;
+    visibility: hidden;
+    opacity: 0;
+    p{
+        cursor: pointer;
+        width: 42px;
+        height: 42px;
+        border-radius: 100%;
+        font-size: 18px;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #ffffff;
+        color: #727272;
+    }
+    .cart{
+        margin-bottom: 10px;
+        &:hover{
+            background: #0d2235;
+            color: #fff;
+        }
+       
+    }
+    .view{
+        margin-bottom: 10px;
+        &:hover{
+            background: #0d2235;
+            color: #fff;
+        }
+    }
+    .wish_list{
+        &:hover{
+            background: #0d2235;
+            color: #fff;
+        }
 
+    }
+}
 .product-details {
     padding: 20px ;
     padding-bottom: 10px;
