@@ -8,9 +8,13 @@ const router = useRouter();
 
 //============================================
 const products = ref([]);
+const category = ref([]);
+const brand = ref([]);
 
 onMounted(async () => {
     getProduct();
+    getCategory();
+    getBrand();
 });
 
 const getProduct = async () => {
@@ -18,7 +22,19 @@ const getProduct = async () => {
     products.value = response.data.products;
     // console.log("response", products.value);
 };
-
+//---------------------------------------------------
+const getCategory = async () => {
+  let response = await axios.get("/api/get_category");
+  category.value = response.data.category;
+  console.log("response", category.value);
+};
+//======================================================
+const getBrand = async () => {
+  let response = await axios.get("/api/get_brand");
+  brand.value = response.data.brand;
+  // console.log("response", brand.value);
+};
+//=====================================
 
 //=====================================
 </script>
@@ -26,41 +42,56 @@ const getProduct = async () => {
 <template>
 <div>
     <div class="container">
-        <div class="heading">
-         
-                <div class="filter_option" style="flex-basis: 33%;text-align: start;">
-                    <select>
-                        <option value="0">Filter</option>
-                        <option value="1">Category</option>
-                        <option value="2">Brand</option>
-                    </select>
-                </div>
-                <div class="search_box" style="flex-basis: 33%;">
-                    <input type="text" placeholder="Search.." name="search">
-                    <button type="submit"><i class="fa fa-search"></i></button>
-                </div>
-                <div class="sort" style="flex-basis: 33%; text-align: end;">
-                <div class="sort_option" >
-                    <label>Sort by:</label>
-                    <select>
-                        <option value="0">Best selling </option>
-                        <option value="1">Featured</option>
-                        <option value="2">Price, low to high</option>
-                        <option value="3">Price, high to low</option>
-                        <option value="4">Date, old to new</option>
-                        <option value="5">Date, new to old</option>
-                        <option value="6">Alphabetically, A-Z</option>
-                        <option value="7">Alphabetically, Z-A </option>
-                    </select>
-                </div>
-            </div>
-        </div>
         <div class="content" style="display: flex; justify-content: space-between; gap: 30px;">
 
-            <div class="left_content" style="flex-basis: 20%;">
-                <h1>jhvdcgdsc</h1>
+            <div class="left_content" style="flex-basis: 20%;     padding-top: 20px;">
+               <div style="display: flex; align-items: center; gap: 15px; padding-bottom: 40px;">
+                <i class="fa-solid fa-bars" style="color: #0d2235; font-size: 14px;"></i>
+                <h1 style="font-size: 18px; font-family: Poppins, sans-serif; font-weight: 800; color: #0d2235;">CATEGORIES</h1>
+               </div>
+
+               <div class="category_filter" v-for=" item in category" :key="item.id">
+                <p>
+                    <a href="#">{{ item.category_name }}</a>
+                </p>
+               </div>
+
+               <div style="display: flex; align-items: center; gap: 15px; padding-bottom: 8px; padding-top: 20px;">
+                <i  class="fa-solid fa-arrow-down" style="color: #0d2235; font-size: 14px;"></i>
+                <h1 style="font-size: 18px; font-family: Poppins, sans-serif; font-weight: 800; color: #0d2235;">BRAND</h1>
+               </div>
+
+               <div class="category_filter" v-for=" item in brand" :key="item.id">
+                <p>
+                    <a href="#">{{ item.brand_name }}</a>
+                </p>
+               </div>
             </div>
             <div class="righ_content" style="flex-basis: 80%;">
+
+                <div class="heading">
+                        
+                        <div class="search_box" style="flex-basis: 33%;">
+                            <input type="text" placeholder="Search.." name="search">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </div>
+                        <div class="sort" style="flex-basis: 33%; text-align: end;">
+                        <div class="sort_option" >
+                            <label>Sort by:</label>
+                            <select>
+                                <option value="0">Best selling </option>
+                                <option value="1">Featured</option>
+                                <option value="2">Price, low to high</option>
+                                <option value="3">Price, high to low</option>
+                                <option value="4">Date, old to new</option>
+                                <option value="5">Date, new to old</option>
+                                <option value="6">Alphabetically, A-Z</option>
+                                <option value="7">Alphabetically, Z-A </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="product_card">
                 <div>
                     <div class="product-wrapper">
@@ -88,9 +119,30 @@ const getProduct = async () => {
 </template>
 
 <style lang="scss" scoped>
+
+.category_filter{
+    p{
+    line-height: 44px;
+    background-color: #efefef;
+    border-radius: 5px;
+    margin: 0px;
+    margin-bottom: 5px;
+    padding: 0 30px;
+    transition: background .3s;
+    display: block;
+    font-weight: 500;
+    a{
+        text-decoration: none;
+        color:#505157;
+        &:hover{
+            color: #62c7af;
+        }
+    }
+    }
+}
 .container {
-    width: 88% !important;
-    padding: 50px 80px;
+    width: 92% ;
+    padding: 50px 50px;
 
     .heading {
         display: flex;
@@ -169,12 +221,13 @@ const getProduct = async () => {
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
-    padding-top: 50px;
+    padding-top: 30px;
     padding-bottom: 50px;
     justify-content: center;
 }
 .pagination {
   display: inline-block;
+  margin-left: 38%;
 }
 
 .pagination a {
