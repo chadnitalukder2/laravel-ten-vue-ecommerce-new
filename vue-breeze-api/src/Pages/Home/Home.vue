@@ -20,7 +20,7 @@ onMounted(async () => {
 const getProduct = async () => {
   let response = await axios.get("/api/get_product");
   products.value = response.data.products;
-  console.log("response", products.value);
+  // console.log("response", products.value);
 };
 //=====================================
 const category = ref([]);
@@ -46,7 +46,7 @@ onMounted(async () => {
 const getBrand = async () => {
   let response = await axios.get("/api/get_brand");
   brand.value = response.data.brand;
-  // console.log("response", category.value);
+  // console.log("response", brand.value);
 };
 //=====================================
 </script>

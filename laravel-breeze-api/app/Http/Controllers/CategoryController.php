@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
 
     public function get_category(){
-        $category = Category::orderBy('id', 'desc')->get();
+        $category = Category::orderBy('id', 'desc')->with('product')->get();
         return response()->json([
             'category' => $category
         ], 200);

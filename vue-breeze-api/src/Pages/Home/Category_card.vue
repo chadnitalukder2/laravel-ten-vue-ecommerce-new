@@ -9,7 +9,7 @@
                </div>
               <div class="card_title">
                 <h4> <a href="#">{{ props.category.category_name }}</a></h4>
-                <p>75 Products</p>
+                <p>{{ props.category.product.length }} Products</p>
               </div>
           
           </div>

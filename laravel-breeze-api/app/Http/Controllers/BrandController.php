@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class BrandController extends Controller
 {
     public function get_brand(){
-        $brand = Brand::orderBy('id', 'desc')->get();
+        $brand = Brand::orderBy('id', 'desc')->with('product')->get();
         return response()->json([
             'brand' => $brand
         ], 200);

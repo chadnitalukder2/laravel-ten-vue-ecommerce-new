@@ -55,14 +55,24 @@ const getProduct = async () => {
                 </div>
             </div>
         </div>
-        <div class="product_card">
-            <div>
-                <div class="product-wrapper">
-                    <Card v-for="product in products" :key="product.id" :product="product" />
+        <div class="content" style="display: flex; justify-content: space-between; gap: 30px;">
+
+            <div class="left_content" style="flex-basis: 20%;">
+                <h1>jhvdcgdsc</h1>
+            </div>
+            <div class="righ_content" style="flex-basis: 80%;">
+                <div class="product_card">
+                <div>
+                    <div class="product-wrapper">
+                        <Card  v-for="product in products" :key="product.id" :product="product" />
+                    </div>
                 </div>
             </div>
-        </div>
 
+            </div>
+
+        </div>
+      
         <div class="pagination">
             <a href="#">&laquo;</a>
             <a href="#">1</a>

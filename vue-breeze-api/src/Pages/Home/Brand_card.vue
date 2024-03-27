@@ -10,7 +10,7 @@
                 </div>
               <div class="card_title">
                 <h4> <a href="#">{{ props.brand.brand_name  }}</a></h4>
-                <p>25 Products</p>
+                <p>{{ props.brand.product.length }} Products</p>
               </div>
           
           </div>
