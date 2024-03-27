@@ -42,7 +42,7 @@ const getBrand = async () => {
 <template>
 <div>
     <div class="container">
-        <div class="content" style="display: flex; justify-content: space-between; gap: 30px;">
+        <div class="content" style="display: flex; justify-content: space-between; gap: 50px;">
 
             <div class="left_content" style="flex-basis: 20%;     padding-top: 20px;">
                <div style="display: flex; align-items: center; gap: 15px; padding-bottom: 40px;">
@@ -71,7 +71,7 @@ const getBrand = async () => {
 
                 <div class="heading">
                         
-                        <div class="search_box" style="flex-basis: 33%;">
+                        <div class="search_box" style="flex-basis: 100%;">
                             <input type="text" placeholder="Search.." name="search">
                             <button type="submit"><i class="fa fa-search"></i></button>
                         </div>

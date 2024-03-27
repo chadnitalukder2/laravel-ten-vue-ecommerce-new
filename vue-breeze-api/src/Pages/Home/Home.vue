@@ -63,11 +63,15 @@ const getBrand = async () => {
     </div>
 
     <div>
-        <h4 class="product-title">All PRODUCTS</h4>
+        <h4 class="product-title">FLASH SALE</h4>
         <div class="product-wrapper">
 
             <Card  v-for="product in products.slice(0, 8)" :key="product.id" :product="product"/>
         
+            <button class="card_button">
+              <a href="/store">
+                View All Product
+              </a></button>
         </div>
     </div>
     
@@ -88,6 +92,29 @@ const getBrand = async () => {
 <style lang="scss" scoped>
 .container{
     width: 100%;
+}
+.card_button{
+  padding: 10px 25px;
+    font-size: 15px;
+    margin-top: 15px;
+    border-radius: 8px;
+    border: 1px solid #d1eae4;
+    background: white;
+    transition: all .3s;
+    cursor: pointer;
+    
+    a{
+      color: #009688;
+      text-decoration: none;
+      transition: all .3s;
+    
+    }
+    &:hover{
+        background:#d1eae4;
+        a{
+          color: #404144;
+        }
+      }
 }
 .product-title {
     font-size: 24px;
