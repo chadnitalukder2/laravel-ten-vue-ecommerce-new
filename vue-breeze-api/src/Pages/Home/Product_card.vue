@@ -7,32 +7,12 @@ import {
 const props = defineProps(["product"]);
 import rating from '../product_details/rating.vue';
 
-import { ref, onMounted } from "vue";
-import axios from "axios";
-
-
-const ratings = ref([]);
-// const user_id = ref([]);
-
-onMounted(async () => {
-    getProduct();
-});
-
-const getProduct = async () => {
-    const id = props.product.id;
-    // console.log('routhiuhuunje', id);
-    let response = await axios.get(`/api/edit_product/${id}`);
-    ratings.value = response.data.product.average_rating
-    // user_id.value = response.data
-    // console.log('responseydyhfb', ratings.value );
-}
-
 </script>
 
 <template>
    
     <div class="product-card">
-        <div class="badge">Hot</div>
+        <div class="badge" style="z-index: 1;">Hot</div>
         <div class="product-tumb">
             <router-link :to="{ name: 'product-details', params: { id: props.product.id }}" style=" width: 100%; height: 100%;" >
             <img :src=" props.product.product_img" alt="">
@@ -53,7 +33,7 @@ const getProduct = async () => {
             <div class="product-bottom-details">
                 <div class="product-price"> ${{ props.product.product_price }}</div>
                 <p style=" margin-bottom: 8px;">
-                    <rating :rating="ratings"></rating>
+                     <rating :rating="props.product.average_rating"></rating>
                 </p>
                
             </div>

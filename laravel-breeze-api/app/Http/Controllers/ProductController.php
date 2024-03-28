@@ -17,6 +17,9 @@ class ProductController extends Controller
         foreach ($products as $product) {
             $product->product_colors = json_decode($product->product_colors);
             $product->product_sizes = json_decode($product->product_sizes);
+
+            $averageRating = $product->averageRating();
+            $product->average_rating = round($averageRating, 2);
         }    
         return response()->json([
             'products' => $products
