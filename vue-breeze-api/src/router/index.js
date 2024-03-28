@@ -2,12 +2,22 @@ import { createRouter, createWebHistory } from "vue-router";
 import axios from "axios";
 
 import Home from "../Pages/Home/Home.vue";
-import Store from "../Pages/Store/StoreIndex.vue";
+import Shop from "../Pages/Shop/ShopIndex.vue";
 import Admin from "../Pages/Admin/Index.vue"
 
 const routes = [
   { path: "/", name: "Home", component: Home },
-  { path: "/store", name: "Store", component: Store },
+  { path: "/Shop", name: "Shop", component: Shop },
+  {
+     path: "/Profile", 
+     name: "Profile",
+      component: () =>import("../Pages/Profile/Profile.vue")
+  },
+  {
+    path: "/Contact", 
+    name: "Contact",
+     component: () =>import("../Pages/Contact/Contact.vue")
+ },
   {
     path: "/product-details/:id",
     name: "product-details",

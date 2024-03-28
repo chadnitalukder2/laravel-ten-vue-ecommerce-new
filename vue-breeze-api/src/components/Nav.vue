@@ -1,37 +1,3 @@
-<template>
-    <nav class="navbar">
-        <div class="navbar-container container">
-            <input type="checkbox" name="" id="">
-            <div class="hamburger-lines">
-                <span class="line line1"></span>
-                <span class="line line2"></span>
-                <span class="line line3"></span>
-            </div>
-
-            <ul class="menu-items">
-
-                <li><router-link :to="{ name: 'Home' }" active-class="active">Home</router-link></li>
-                <li><router-link :to="{ name: 'Store' }" active-class="active">Shop</router-link></li>
-                <li v-if="!state.loggedIn"><router-link active-class="active" :to="{ name: 'Login' }">Login</router-link></li>
-                <li v-if="!state.loggedIn"><router-link active-class="active" :to="{ name: 'Register' }">Register</router-link></li>
-                <li v-if="state.loggedIn">
-                    <button @click="handleLogout">
-                        Logout
-                    </button>
-                </li>
-                <li><router-link v-if="state.is_admin" active-class="active" :to="{ name: 'dashboard' }">Admin</router-link></li>
-                <li><router-link active-class="active" :to="{ name: 'add-cart' }"><i class="fa-solid fa-cart-plus"></i></router-link></li>
-            </ul>
-            <div class="logo">
-                <router-link :to="{ name: 'Home' }">
-                    <img style="max-height: 52px;" src="https://similux-vinovatheme.myshopify.com/cdn/shop/files/Logo-retina.png?v=1667462956&width=300" alt="logo" />
-                </router-link>
-            </div>
-        </div>
-    </nav>
-
-</template>
-
 <script setup>
 
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -79,6 +45,47 @@ onMounted(async () => {
     getUser();
 });
 </script>
+
+
+
+<template>
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <input type="checkbox" name="" id="">
+            <div class="hamburger-lines">
+                <span class="line line1"></span>
+                <span class="line line2"></span>
+                <span class="line line3"></span>
+            </div>
+
+            <ul class="menu-items">
+
+                <li><router-link :to="{ name: 'Home' }" active-class="active">Home</router-link></li>
+                <li><router-link :to="{ name: 'Shop' }" active-class="active">Shop</router-link></li>
+                <li><router-link :to="{ name: 'Contact' }" active-class="active">Contact</router-link></li>
+                <li v-if="!state.loggedIn"><router-link active-class="active" :to="{ name: 'Login' }">Login</router-link></li>
+                <li v-if="!state.loggedIn"><router-link active-class="active" :to="{ name: 'Register' }">Register</router-link></li>
+                <li v-if="state.loggedIn">
+                    <button @click="handleLogout">
+                        Logout
+                    </button>
+                </li>
+                <li><router-link v-if="state.is_admin" active-class="active" :to="{ name: 'dashboard' }">Admin</router-link></li>
+                <li><router-link active-class="active" :to="{ name: 'add-cart' }"><i class="fa-solid fa-cart-plus"></i></router-link></li>
+                <li><router-link :to="{ name: 'Profile' }" active-class="active"><i class="fa-solid fa-user"></i></router-link></li>
+            </ul>
+            <div class="logo">
+                <router-link :to="{ name: 'Home' }">
+                    <img style="max-height: 52px;" src="https://similux-vinovatheme.myshopify.com/cdn/shop/files/Logo-retina.png?v=1667462956&width=300" alt="logo" />
+                </router-link>
+            </div>
+        </div>
+    </nav>
+
+</template>
+
+
+
 
 <style lang="scss" scoped>
 .navbar {

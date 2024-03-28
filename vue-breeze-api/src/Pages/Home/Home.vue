@@ -57,19 +57,21 @@ const getBrand = async () => {
     <Hero />
     <div style="  background: #f0f8fc;  padding-top: 15px;">
         <h4 class="product-title">CATEGORY </h4>
+        <hr style="width: 12%;   border: 1px solid #009688;">
         <div class="product-wrapper">
             <Category_card v-for="category in category.slice(0, 5)" :key="category.id" :category="category"/>
         </div>
     </div>
 
     <div>
-        <h4 class="product-title">FLASH SALE</h4>
+        <h4 class="product-title" >TRENDING PRODUCTS</h4>
+        <hr style="width: 22%;   border: 1px solid #009688;">
         <div class="product-wrapper">
 
             <Card  v-for="product in products.slice(0, 8)" :key="product.id" :product="product"/>
         
             <button class="card_button">
-              <a href="/store">
+              <a href="/Shop">
                 View All Product
               </a></button>
         </div>
@@ -77,6 +79,7 @@ const getBrand = async () => {
     
     <div style="  background: #f0f8fc;  padding-top: 1px;">
         <h4 class="product-title"> BRAND </h4>
+        <hr style="width: 10%;   border: 1px solid #009688;">
         <div class="product-wrapper">
             <Brand_card v-for="brand in brand.slice(0, 6) " :key="brand.id" :brand="brand"/>
         </div>
@@ -124,9 +127,9 @@ const getBrand = async () => {
     text-align: center;
     padding: 10px;
     margin-top: 28px;
-    border-bottom: 2px solid #009688;
-    width: 170px;
+    font-family: Poppins, sans-serif;
 }
+
 .product-wrapper {
     display: flex;
     flex-wrap: wrap;
