@@ -7,25 +7,6 @@ import {
 const props = defineProps(["product"]);
 import rating from '../product_details/rating.vue';
 
-import { ref, onMounted } from "vue";
-import axios from "axios";
-
-
-const ratings = ref([]);
-// const user_id = ref([]);
-
-onMounted(async () => {
-    getProduct();
-});
-
-const getProduct = async () => {
-    const id = props.product.id;
-    // console.log('routhiuhuunje', id);
-    let response = await axios.get(`/api/edit_product/${id}`);
-    ratings.value = response.data.product.average_rating
-    // user_id.value = response.data
-    // console.log('responseydyhfb', ratings.value );
-}
 
 </script>
 
@@ -53,7 +34,7 @@ const getProduct = async () => {
             <div class="product-bottom-details">
                 <div class="product-price"> ${{ props.product.product_price }}</div>
                 <p style=" margin-bottom: 8px;">
-                    <rating :rating="ratings"></rating>
+                    <rating :rating="props.product.average_rating"></rating>
                 </p>
                
             </div>
