@@ -40,7 +40,11 @@ const getProduct = async () => {
         </div>
         <div class="product_cart">
             <p class="cart"><i class="fa-solid fa-cart-shopping"></i></p>
-            <p class="view"><i class="fa-solid fa-eye"></i></p>
+            <p class="view">
+                <router-link :to="{ name: 'product-details', params: { id: props.product.id }}" >
+                    <i class="fa-solid fa-eye"></i>
+               </router-link>
+            </p>
             <p class="wish_list"><i class="fa-solid fa-heart"></i></p>
         </div>
         <div class="product-details">
@@ -147,6 +151,7 @@ a {
         justify-content: center;
         background: #ffffff;
         color: #727272;
+        transition: all .3s;
     }
     .cart{
         margin-bottom: 10px;
@@ -158,9 +163,14 @@ a {
     }
     .view{
         margin-bottom: 10px;
+        a{
+            color: #727272;
+        }
         &:hover{
             background: #0d2235;
-            color: #fff;
+            a{
+                color: #fff;
+            }
         }
     }
     .wish_list{
