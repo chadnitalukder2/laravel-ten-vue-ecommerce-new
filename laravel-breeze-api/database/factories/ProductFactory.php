@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Brand;
 use App\Models\Category;
+use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,6 +20,19 @@ class ProductFactory extends Factory
     public function definition()
     {
 
+        $client = new Client();
+        $response = $client->request('GET', 'https://api.unsplash.com/photos/random', [
+            'query' => [
+                'query' => 'product',
+                'client_id' => 'C-2uwpLuPXX4sI1FHEuV2HPN4PzLQr-TiSYh4juntJM', // Replace with your Unsplash access key
+            ]
+        ]);
+
+        $data = json_decode($response->getBody(), true);
+
+        $productImage = $data['urls']['regular'];
+
+
         $colors = $this->faker->randomElements(['Red', 'Blue', 'Green', 'Yellow', 'Black', 'White'], $this->faker->numberBetween(1, 3));
         $sizes = $this->faker->randomElements(['Small', 'Medium', 'Large', 'XL'], $this->faker->numberBetween(1, 4));
         
@@ -31,7 +45,7 @@ class ProductFactory extends Factory
             'product_quantity' => $this->faker->numberBetween(1, 100),
             'brand_id' =>Brand::factory(),
             'category_id' => Category::factory(), 
-            'product_img' => $this->faker->imageUrl(400, 300, 'food'),
+            'product_img' => $productImage,
             'product_colors' => $colorsString,
             'product_sizes' => $sizesString,
             'short_description' => $this->faker->paragraph,
