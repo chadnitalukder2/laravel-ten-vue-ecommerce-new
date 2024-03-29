@@ -7,6 +7,7 @@ use App\Http\Controllers\OrderItemsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -59,7 +60,7 @@ Route::get('/delete_order_item/{id}', [OrderController::class, 'delete_order_ite
 Route::get('/getOrderItemByOrderId/{id}', [OrderController::class, 'getOrderItemByOrderId']);
 Route::post('/update_order_status/{id}', [OrderController::class, 'update_order_status']);
 
-
+Route::get('/get_orders', [OrderItemsController::class, 'get_orders']);
 
 
 

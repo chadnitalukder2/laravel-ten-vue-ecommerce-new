@@ -147,4 +147,5 @@ class OrderController extends Controller
         $orderItem = Order::findOrFail($id);
         $orderItem->delete();
     }
+
 }

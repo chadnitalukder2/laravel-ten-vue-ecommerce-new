@@ -13,6 +13,9 @@ class Product extends Model
     public function category(){
         return $this->belongsTo(Category::class);
     }
+    public function brand(){
+        return $this->belongsTo(Brand::class);
+    }
 
     public function reviews() {
         return $this->hasMany(Review::class)->latest();;
@@ -22,8 +25,5 @@ class Product extends Model
         return $this->reviews()->avg('rating');
     }
 
-    public function brand(){
-        return $this->belongsTo(Brand::class);
-    }
  
 }
