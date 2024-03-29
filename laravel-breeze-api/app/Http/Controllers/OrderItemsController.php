@@ -112,4 +112,8 @@ class OrderItemsController extends Controller
             'orderItem' => $orderItem
         ], 200);
     }
+    public function delete_Order($id){
+        $orderItem = OrderItems::findOrFail($id);
+        $orderItem->delete();
+    }
 }
