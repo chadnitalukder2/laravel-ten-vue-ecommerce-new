@@ -12,7 +12,7 @@ import rating from '../product_details/rating.vue';
 <template>
    
     <div class="product-card">
-        <div class="badge" style="z-index: 1;">Hot</div>
+        <!----<div class="badge" style="z-index: 1;">Hot</div>-->
         <div class="product-tumb">
             <router-link :to="{ name: 'product-details', params: { id: props.product.id }}" style=" width: 100%; height: 100%;" >
             <img :src=" props.product.product_img" alt="">

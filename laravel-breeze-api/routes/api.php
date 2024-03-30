@@ -63,5 +63,5 @@ Route::post('/update_order_status/{id}', [OrderController::class, 'update_order_
 Route::get('/get_orders', [OrderItemsController::class, 'get_orders']);
 Route::get('/delete_Order/{id}', [OrderItemsController::class, 'delete_Order']);
 
-
+Route::get('/get_order_details', [OrderController::class, 'get_order_details']);
 

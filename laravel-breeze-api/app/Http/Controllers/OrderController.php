@@ -148,4 +148,12 @@ class OrderController extends Controller
         $orderItem->delete();
     }
 
+    public function get_order_details(){
+        $userId =  Auth::user()->id;
+        $orderDetails = Order::orderBy('id', 'desc')->where('user_id', $userId)->get();
+
+        return response()->json([
+            'orderDetails' => $orderDetails
+        ], 200);
+    }
 }
