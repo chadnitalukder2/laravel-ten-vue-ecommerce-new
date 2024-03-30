@@ -74,7 +74,9 @@ const formatDate = (dateString) => {
             <p style="margin: 0px;">nitesh@gmail.com</p>
             <p style=" margin-top: 10px;">01753507283</p>
           </div>
-          <button>Logout</button>
+          <button>
+            <router-link style="text-decoration: none;" :to="{ name: 'Login' }">Login</router-link>
+          </button>
         </div>
     </div>
       <div class="right_content">
@@ -235,10 +237,12 @@ const formatDate = (dateString) => {
         padding: 8px;
         border-radius: 5px;
         background: #179f83;
-        color: white;
         border: 1px solid #179f83;
         cursor: pointer;
-        margin-bottom: 30px
+        margin-bottom: 30px;
+        a{
+          color: white;
+        }
       }
     }
   }
