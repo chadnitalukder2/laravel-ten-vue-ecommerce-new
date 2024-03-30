@@ -57,7 +57,15 @@ const formatDate = (dateString) => {
     return date.toLocaleDateString('en-US', options);
 };
 //-------------------------------------------------------
-
+const handleLogout = async () => {
+    localStorage.removeItem('email');
+    localStorage.removeItem('password');
+    await axios.post('/logout');
+    state.loggedIn = false;
+    router.push({ name: 'Login' });
+    // window.location.reload();
+};
+//---------------------------------------------------------
 </script>
 
 <template>
@@ -74,9 +82,9 @@ const formatDate = (dateString) => {
             <p style="margin: 0px;">nitesh@gmail.com</p>
             <p style=" margin-top: 10px;">01753507283</p>
           </div>
-          <button>
-            <router-link style="text-decoration: none;" :to="{ name: 'Login' }">Login</router-link>
-          </button>
+          <button @click="handleLogout">
+                        Logout
+                    </button>
         </div>
     </div>
       <div class="right_content">
@@ -240,9 +248,7 @@ const formatDate = (dateString) => {
         border: 1px solid #179f83;
         cursor: pointer;
         margin-bottom: 30px;
-        a{
           color: white;
-        }
       }
     }
   }
