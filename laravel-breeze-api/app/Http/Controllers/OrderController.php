@@ -150,7 +150,7 @@ class OrderController extends Controller
 
     public function get_order_details(){
         $userId =  Auth::user()->id;
-        $orderDetails = Order::orderBy('id', 'desc')->where('user_id', $userId)->get();
+        $orderDetails = Order::orderBy('id', 'desc')->where('user_id', $userId)->with('orderItem.product')->get()->toArray();
 
         return response()->json([
             'orderDetails' => $orderDetails

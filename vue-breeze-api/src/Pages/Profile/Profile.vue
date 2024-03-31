@@ -12,21 +12,14 @@ const router = useRouter();
 import { useRoute } from "vue-router";
 const route = useRoute();
 //-------------------------------------------------
-const orderItems = ref([]);
 const orderDetails = ref([]);
+const userInfo = ref([]);
 const VisibleId = ref(null);
 //--------------------------------------------------
 onMounted(async () => {
-  getOrders();
   getOrderDetails();
+  user();
 });
-//--------------------------------------
-const getOrders = async () => {
-  console.log('item', id)
-    let response = await axios.get("/api/get_orders");
-    orderItems.value = response.data.orderItem ;
-console.log('responsedd', response );
-};
 //-------------------------------------------
 const deleteOrder = (id) => {
     axios.get(`/api/delete_Order/${id}`).then( () => {
@@ -48,7 +41,7 @@ const closeModalView = () => {
 const getOrderDetails = async () => {
   let response = await axios.get("/api/get_order_details");
   orderDetails.value = response.data.orderDetails ;
-  //  console.log('responsedd', orderDetails.value );
+  console.log('responsedd', orderDetails.value );
 }
 //----------------------------------------------
 const formatDate = (dateString) => {
@@ -66,6 +59,12 @@ const handleLogout = async () => {
     // window.location.reload();
 };
 //---------------------------------------------------------
+
+const user = async () =>{
+  let response = await axios.get('/api/user');
+  userInfo.value = response.data;
+  // console.log('response', userInfo.value);
+}
 </script>
 
 <template>
@@ -78,9 +77,9 @@ const handleLogout = async () => {
             </div>
           </div>
           <div class="profile_info">
-            <h4>NItesh Dash</h4>
-            <p style="margin: 0px;">nitesh@gmail.com</p>
-            <p style=" margin-top: 10px;">01753507283</p>
+            <h4>{{ userInfo.name }}</h4>
+            <p style="margin: 0px;">{{ userInfo.email }}</p>
+            <p style=" margin-top: 10px;"> Role : {{ userInfo.role }}</p>
           </div>
           <button @click="handleLogout">
                         Logout
@@ -90,88 +89,86 @@ const handleLogout = async () => {
       <div class="right_content">
 
            <div class="table-box" >
-          <div >
-            <h1 style="text-align: left; margin: 0px; margin-bottom: 20px;">Order Items</h1>
-          </div>
-          
-          <table id="customers">
-            <tr>
-              <th></th>
-              <th>Total Amount</th>
-              <th>Order Status</th>
-              <th>Payment Status</th>
-              <th>Date</th>
-              <th></th>
-              <!-- <th></th> -->
-            </tr>
-            <tbody v-for="item in orderDetails" :key="item.id">
-              <tr>
-                <td style="color: blue"># {{ item.id }}</td>
-                <td>{{ item.total_amount }}</td>
-                <td>{{ item.order_status }}</td>
-                <td>{{ item.payment_status }}</td>
-                <td>{{ formatDate(item.created_at) }}</td>
-                <!-- <td @click="openModalDelete(item.id)" style="    font-size: 20px;font-weight: 600;color: #cb0505;cursor: pointer;">Cancel</td> -->
-                <td > 
-                  <button @click="openModalView(item.id)" class="view"> View</button>
-                </td>
-              </tr>
-              <Modal :show="VisibleId === item.id" @close="closeModalView">
-                {{ item.id }}
-                <div class="container">
-                  <div class="table-box">
-                    <div style="display: flex; gap: 10px;align-items: baseline;">
-                      <span>
-                        <router-link :to="{ name: 'all-order' }">
-                          <i style="color:#444 ;" class="fa-solid fa-arrow-left"></i>
-                        </router-link>
-                        
-                      </span>
-                      <h1>Order Details</h1>
-                    </div>
-                    
-                    <table id="customers">
-                      <tr>
-                        <th># ID</th>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Color</th>
-                        <th>Size</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                      </tr>
-                      <tbody v-for="item in orderItemsh" :key="item.id">
-                        <tr>
-                          <td style="color: blue"># {{ item.id }}</td>
-                          <td style="width: 120px; height: 100px">
-                            <img
-                              :src="item.product.product_img"
-                              style="width: 100%; height: 100%"
-                            />
-                          </td>
-                          <td>{{ item.product.product_name }}</td>
-                          <td>{{ item.color }}</td>
-                          <td>{{ item.size }}</td>
-                          <td>{{ item.quantity }}</td>
-                          <td>{{ item.product.product_price }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                <div >
+                  <h1 style="text-align: left; margin: 0px; margin-bottom: 20px;">Order Items</h1>
                 </div>
-              </Modal>
-            </tbody>
-          </table>
+                
+                <table id="customers">
+                  <tr>
+                    <th></th>
+                    <th>Total Amount</th>
+                    <th>Order Status</th>
+                    <th>Payment Status</th>
+                    <th>Date</th>
+                    <th></th>
+                    <!-- <th></th> -->
+                  </tr>
+                  <tbody v-for="item in orderDetails" :key="item.id">
+                    <tr>
+                      <td style="color: blue"># {{ item.id }}</td>
+                      <td>{{ item.total_amount }}</td>
+                      <td>{{ item.order_status }}</td>
+                      <td>{{ item.payment_status }}</td>
+                      <td>{{ formatDate(item.created_at) }}</td>
+                      <!-- <td @click="openModalDelete(item.id)" style="    font-size: 20px;font-weight: 600;color: #cb0505;cursor: pointer;">Cancel</td> -->
+                      <td > 
+                        <button @click="openModalView(item.id)" class="view"> View</button>
+                      </td>
+                    </tr>
+                    <Modal  :show="VisibleId === item.id" @close="closeModalView">
+                      <div >
+                            <h1 style="text-align: left; font-size: 22px; margin-top: 10px;">Order Details</h1>
+                          </div>
+                      <div class="container" style="padding: 5px; background: transparent; display: flex; gap: 10px;">
+                          
+                          
+                          <table id="customers" style="flex-basis: 80%;">
+                            <tr>
+                              <th style="font-size: 18px;padding: 15px 0px"></th>
+                              <th style="font-size: 18px; padding: 15px 0px">Image</th>
+                              <th style="font-size: 18px; padding: 15px 0px">Name</th>
+                              <th style="font-size: 18px; padding: 15px 0px">Color</th>
+                              <th style="font-size: 18px; padding: 15px 0px">Size</th>
+                              <th style="font-size: 18px; padding: 15px 0px">Quantity</th>
+                              <th style="font-size: 18px; padding: 15px 0px">Price</th>
+                            </tr>
+                            <tbody v-for="orderItem in item.order_item" :key="orderItem.id">
+                          
+                              <tr >
+                                
+
+                                <td style="color: blue; padding: 5px"># {{ orderItem.id }}</td>
+                                <td style="width: 90px; height: 70px;padding: 5px">
+                                  <img
+                                    :src="orderItem.product.product_img"
+                                    style="width: 100%; height: 100%"
+                                  />
+                                </td>
+                                <td style="padding: 5px">{{ orderItem.product.product_name }}</td>
+                                <td style="padding: 5px">{{ orderItem.color }}</td>
+                                <td style="padding: 5px">{{ orderItem.size }}</td>
+                                <td style="padding: 5px">{{ orderItem.quantity }}</td>
+                                <td style="padding: 5px">{{ orderItem.product.product_price }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                          <div class="info" style="flex-basis: 20%;" >
+                              <h1>Shipping Address</h1>
+
+                              <p> <span style="font-weight: 600;">Name </span> : {{ item.name }}</p>
+                              <p> <span style="font-weight: 600;">Email </span> :  {{ item.email }}</p>
+                              <p> <span style="font-weight: 600;">Address </span> : {{ item.address }} </p>
+                              <p> <span style="font-weight: 600;">Phone </span> : {{ item.phone }} </p>
+                          </div>
+                    
+                      </div>
+                    </Modal>
+                  </tbody>
+                </table>
            </div>
 
-           <div class="info" v-for="item in orderDetails" :key="item.id">
-              <h1>Shipping Address</h1>
-
-              <p>Name : {{ item.name }}</p>
-              <p>Email :  {{ item.email }}</p>
-              <p>Address : {{ item.address }} </p>
-              <p>Phone : {{ item.phone }} </p>
-           </div>
+           
       </div>
     </div>
 </template>
@@ -179,6 +176,7 @@ const handleLogout = async () => {
 <style lang="scss" scoped>
 
 #myModal{
+
 .modal_footer{
   button{
   
@@ -196,7 +194,8 @@ const handleLogout = async () => {
   margin: 0 5px;
   }
  
-}
+} 
+
  
 }
 .container {
@@ -221,10 +220,10 @@ const handleLogout = async () => {
           overflow: hidden;
           position: absolute;
           bottom: 170px;
-          right: 70px;
+          right: 25%;
           text-align: center;
-          width: 160px;
-          height: 160px
+          width: 170px;
+          height: 170px
         }
       }
       .profile_info{
@@ -257,17 +256,16 @@ const handleLogout = async () => {
     flex-basis: 75%;
     .info{
       background: #fff;
-      padding: 20px 30px;
+      padding: 10px 10px;
       text-align: left;
-      margin: 20px 0px;
       box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.1);
       border-radius: 5px;
       h1{
         margin: 0px;
-        font-size: 24px;
+        font-size: 18px;
       }
       p{
-        font-size: 18px;
+        font-size: 14px;
         font-weight: 500;
         text-transform: capitalize;
       }
