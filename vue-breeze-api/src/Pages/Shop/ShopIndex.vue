@@ -1,7 +1,7 @@
 <script setup>
 import Card from "../Home/Product_card.vue";
 
-import {ref,onMounted} from "vue";
+import {ref,onMounted, watch} from "vue";
 import axios from "axios";
 import { useRouter} from "vue-router";
 const router = useRouter();
@@ -10,6 +10,12 @@ const router = useRouter();
 const products = ref([]);
 const category = ref([]);
 const brand = ref([]);
+const filter = ref({
+    search: "",
+    category_id: "",
+    brand_id: "",
+    sort: "",
+});
 
 onMounted(async () => {
     getProduct();
@@ -17,8 +23,13 @@ onMounted(async () => {
     getBrand();
 });
 
+ // Define a watcher
+ watch(filter, (newValue, oldValue) => {
+      getProduct();
+    }, { deep: true });
+
 const getProduct = async () => {
-    let response = await axios.get("/api/get_product");
+    let response = await axios.get("/api/get_product", { params: { filter: filter.value } });
     products.value = response.data.products;
     // console.log("response", products.value);
 };
@@ -51,7 +62,7 @@ const getBrand = async () => {
                </div>
 
                <div class="category_filter" v-for=" item in category" :key="item.id">
-                <p>
+                <p style="cursor: pointer;" @click="filter.category_id = item.id" >
                     <a href="#">{{ item.category_name }}</a>
                 </p>
                </div>
@@ -62,7 +73,7 @@ const getBrand = async () => {
                </div>
 
                <div class="category_filter" v-for=" item in brand" :key="item.id">
-                <p>
+                <p style="cursor: pointer;" @click="filter.brand_id = item.id">
                     <a href="#">{{ item.brand_name }}</a>
                 </p>
                </div>
@@ -72,7 +83,7 @@ const getBrand = async () => {
                 <div class="heading">
                         
                         <div class="search_box" style="flex-basis: 100%;">
-                            <input type="text" placeholder="Search.." name="search">
+                            <input  v-model="filter.search" type="text" placeholder="Search.." name="search">
                             <button type="submit"><i class="fa fa-search"></i></button>
                         </div>
                         <div class="sort" style="flex-basis: 33%; text-align: end;">

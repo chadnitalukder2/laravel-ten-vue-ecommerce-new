@@ -10,9 +10,21 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    public function get_product(){
-        
-        $products = Product::orderBy('id', 'desc')->with('category', 'brand')->get();
+    public function get_product(Request $request){
+
+        $queryParams = $request['filter'];
+        $products = Product::orderBy('id', 'desc')
+        ->with('category', 'brand')
+        ->when(isset($queryParams['category_id']), function($query) use ($queryParams){
+            return $query->where('category_id', $queryParams['category_id']);
+        })
+        ->when(isset($queryParams['brand_id']), function($query) use ($queryParams){
+            return $query->where('brand_id', $queryParams['brand_id']);
+        })
+        ->when(isset($queryParams['search']), function($query) use ($queryParams){
+            return $query->where('product_name', 'like', '%'.$queryParams['search'].'%');
+        })
+        ->get();
         
         foreach ($products as $product) {
             $product->product_colors = json_decode($product->product_colors);
