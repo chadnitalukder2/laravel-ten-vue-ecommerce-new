@@ -16,10 +16,10 @@ class ProductController extends Controller
         $products = Product::orderBy('id', 'desc')
         ->with('category', 'brand')
         ->when(isset($queryParams['category_id']), function($query) use ($queryParams){
-            return $query->where('category_id', $queryParams['category_id']);
+            return $query->whereIn('category_id', $queryParams['category_id']);
         })
         ->when(isset($queryParams['brand_id']), function($query) use ($queryParams){
-            return $query->where('brand_id', $queryParams['brand_id']);
+            return $query->whereIn('brand_id', $queryParams['brand_id']);
         })
         ->when(isset($queryParams['search']), function($query) use ($queryParams){
             return $query->where('product_name', 'like', '%'.$queryParams['search'].'%');

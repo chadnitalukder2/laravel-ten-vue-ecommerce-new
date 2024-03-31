@@ -12,8 +12,8 @@ const category = ref([]);
 const brand = ref([]);
 const filter = ref({
     search: "",
-    category_id: "",
-    brand_id: "",
+    category_id: [],
+    brand_id: [],
     sort: "",
 });
 
@@ -62,20 +62,21 @@ const getBrand = async () => {
                </div>
 
                <div class="category_filter" v-for=" item in category" :key="item.id">
-                <p style="cursor: pointer;" @click="filter.category_id = item.id" >
-                    <a href="#">{{ item.category_name }}</a>
-                </p>
+                    <label>
+                        <input type="checkbox" :value="item.id" v-model="filter.category_id">
+                        {{ item.category_name }}
+                    </label>
                </div>
 
                <div style="display: flex; align-items: center; gap: 15px; padding-bottom: 8px; padding-top: 20px;">
                 <i  class="fa-solid fa-arrow-down" style="color: #0d2235; font-size: 14px;"></i>
                 <h1 style="font-size: 18px; font-family: Poppins, sans-serif; font-weight: 800; color: #0d2235;">BRAND</h1>
                </div>
-
                <div class="category_filter" v-for=" item in brand" :key="item.id">
-                <p style="cursor: pointer;" @click="filter.brand_id = item.id">
-                    <a href="#">{{ item.brand_name }}</a>
-                </p>
+                    <label>
+                        <input type="checkbox" :value="item.id" v-model="filter.brand_id">
+                        {{ item.brand_name }}
+                    </label>
                </div>
             </div>
             <div class="righ_content" style="flex-basis: 80%;">
