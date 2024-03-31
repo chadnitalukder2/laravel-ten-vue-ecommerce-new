@@ -15,14 +15,23 @@ const route = useRoute();
 const orderDetails = ref([]);
 const userInfo = ref([]);
 const VisibleId = ref(null);
+const deleteVisibleId = ref(null);
 //--------------------------------------------------
 onMounted(async () => {
   getOrderDetails();
   user();
 });
 //-------------------------------------------
-const deleteOrder = (id) => {
-    axios.get(`/api/delete_Order/${id}`).then( () => {
+//---------------------------------------------------
+const openModalDelete = (id) => {
+    deleteVisibleId.value = id;
+};
+const closeModalDelete = () => {
+    deleteVisibleId.value =null;
+};
+//--------------------------------------------
+const deleteOrder = (item) => {
+    axios.get(`/api/delete_Order/${item.id}`).then( () => {
       notify({
         title: "Order Item Deleted",
         type: "success",
@@ -101,16 +110,28 @@ const user = async () =>{
                     <th>Payment Status</th>
                     <th>Date</th>
                     <th></th>
-                    <!-- <th></th> -->
+                    <th></th> 
                   </tr>
                   <tbody v-for="item in orderDetails" :key="item.id">
+                    <Modal :show="deleteVisibleId === item.id" @close="closeModalDelete">
+                      <div id="myModal" style="text-align: center;">
+                          <h4 style="margin-top: 20px; font-size: 26px; color: #636363; font-weight: 500;">Are you sure?</h4>
+                          <div class="modal-body">
+                              <p style="font-size: 14px; color: #999999;">Do you really want to delete these records? This process cannot be undone.</p>
+                          </div>
+                          <div class="modal_footer" style="padding: 20px;" >
+                              <!-- <button @close="closeModalDelete" type="button" class="secondary" >Cancel</button> -->
+                              <button @click="deleteOrder(item.id)" type="button" style="background: #f15e5e;">Delete</button>
+                          </div>   
+                      </div>  
+                    </Modal>
                     <tr>
                       <td style="color: blue"># {{ item.id }}</td>
                       <td>{{ item.total_amount }}</td>
                       <td>{{ item.order_status }}</td>
                       <td>{{ item.payment_status }}</td>
                       <td>{{ formatDate(item.created_at) }}</td>
-                      <!-- <td @click="openModalDelete(item.id)" style="    font-size: 20px;font-weight: 600;color: #cb0505;cursor: pointer;">Cancel</td> -->
+                      <td @click="openModalDelete(item.id)" style="   font-size: 18px;font-weight: 600;color: #cb0505;cursor: pointer;">Cancel</td>
                       <td > 
                         <button @click="openModalView(item.id)" class="view"> View</button>
                       </td>
@@ -131,6 +152,7 @@ const user = async () =>{
                               <th style="font-size: 18px; padding: 15px 0px">Size</th>
                               <th style="font-size: 18px; padding: 15px 0px">Quantity</th>
                               <th style="font-size: 18px; padding: 15px 0px">Price</th>
+                              <th></th>
                             </tr>
                             <tbody v-for="orderItem in item.order_item" :key="orderItem.id">
                           
@@ -149,6 +171,7 @@ const user = async () =>{
                                 <td style="padding: 5px">{{ orderItem.size }}</td>
                                 <td style="padding: 5px">{{ orderItem.quantity }}</td>
                                 <td style="padding: 5px">{{ orderItem.product.product_price }}</td>
+                                <td>delete</td>
                               </tr>
                             </tbody>
                           </table>
