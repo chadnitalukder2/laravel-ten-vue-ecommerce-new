@@ -49,6 +49,7 @@ const closeModalDelete = () => {
           <th># ID</th>
           <th>User Name</th>
           <th>User Email</th>
+          <th>Role</th>
           <th>Action</th>
         </tr>
         <tbody v-for="item in user" :key="item.id">
@@ -72,6 +73,7 @@ const closeModalDelete = () => {
             </td>
             <td>{{ item.name }}</td>
             <td>{{ item.email }}</td>
+            <td>{{ item.role }}</td>
             <td
             @click="openModalDelete(item.id)"
               style="color: red; cursor: pointer"

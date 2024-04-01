@@ -38,7 +38,7 @@ class Controller extends BaseController
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
-           
+            'role' => $request->role,
          ]);
          return response()->json([
             'user' => $user
