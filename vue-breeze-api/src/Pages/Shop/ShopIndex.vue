@@ -62,10 +62,11 @@ const getBrand = async () => {
                </div>
 
                <div class="category_filter" v-for=" item in category" :key="item.id">
-                    <label>
+                    <div>
+                        <p> {{ item.category_name }}</p>
                         <input type="checkbox" :value="item.id" v-model="filter.category_id">
-                        {{ item.category_name }}
-                    </label>
+
+                    </div>
                </div>
 
                <div style="display: flex; align-items: center; gap: 15px; padding-bottom: 8px; padding-top: 20px;">
@@ -73,10 +74,10 @@ const getBrand = async () => {
                 <h1 style="font-size: 18px; font-family: Poppins, sans-serif; font-weight: 800; color: #0d2235;">BRAND</h1>
                </div>
                <div class="category_filter" v-for=" item in brand" :key="item.id">
-                    <label>
+                    <div>
+                        <p>{{ item.brand_name }}</p>
                         <input type="checkbox" :value="item.id" v-model="filter.brand_id">
-                        {{ item.brand_name }}
-                    </label>
+                    </div>
                </div>
             </div>
             <div class="righ_content" style="flex-basis: 80%;">
@@ -133,23 +134,22 @@ const getBrand = async () => {
 <style lang="scss" scoped>
 
 .category_filter{
-    p{
-    line-height: 44px;
-    background-color: #efefef;
-    border-radius: 5px;
-    margin: 0px;
-    margin-bottom: 5px;
-    padding: 0 30px;
-    transition: background .3s;
-    display: block;
-    font-weight: 500;
-    a{
-        text-decoration: none;
-        color:#505157;
-        &:hover{
-            color: #62c7af;
+    div{
+        display: flex;
+        justify-content: space-between;
+        line-height: 44px;
+        background-color: #efefef;
+        border-radius: 5px;
+        margin: 0px;
+        margin-bottom: 5px;
+        padding: 0 30px;
+
+        p{
+            margin: 0px;
+            font-weight: 500;
+            color:#505157;
+               
         }
-    }
     }
 }
 .container {
