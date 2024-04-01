@@ -132,7 +132,7 @@ const user = async () =>{
                       <td>{{ item.order_status }}</td>
                       <td>{{ item.payment_status }}</td>
                       <td>{{ formatDate(item.created_at) }}</td>
-                      <td @click="openModalDelete(item.id)" style="   font-size: 18px;font-weight: 600;color: #cb0505;cursor: pointer;">Cancel</td>
+                      <td v-if="(item.payment_status === 'pending')" @click="openModalDelete(item.id)" style="font-size: 18px;font-weight: 600;color: #cb0505;cursor: pointer;"> Cancel </td>
                       <td > 
                         <button @click="openModalView(item.id)" class="view"> View</button>
                       </td>
