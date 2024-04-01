@@ -133,7 +133,7 @@ const user = async () =>{
                       <td>{{ item.payment_status }}</td>
                       <td>{{ formatDate(item.created_at) }}</td>
                       <td> 
-                        <p   v-if="item.order_status == 'Pending'" @click="openModalDelete(item.id)" style="color: rgb(191 42 42);cursor: pointer;">Cancel</p>
+                        <p   v-if="item.order_status == 'Pending'|| 'padding'" @click="openModalDelete(item.id)" style="color: rgb(191 42 42);cursor: pointer;">Cancel</p>
                         <p  v-else  > Delivered</p>
                       </td>
                       <td > 
