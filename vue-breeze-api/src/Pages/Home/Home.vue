@@ -21,8 +21,8 @@ onMounted(async () => {
 const getProduct = async () => {
   let response = await axios.get("/api/get_product");
   products.value = response.data.products;
-  user_id.value = response.data
-  // console.log("responseID", user_id.value);
+  user_id.value = response.data.user_id
+  console.log("responseID", user_id.value);
 };
 //=====================================
 const category = ref([]);
@@ -70,8 +70,8 @@ const getBrand = async () => {
         <hr style="width: 22%;   border: 1px solid #009688;">
         <div class="product-wrapper">
 
-            <Card  v-for="product in products.slice(0, 8)" :key="product.id" :product="product" :user_id="user_id"/>
-        
+            <Card  v-for="product in products.slice(0, 8)" :key="product.id" :product="product" :user_id="12"/>
+
             <button class="card_button">
               <a href="/Shop">
                 View All Product

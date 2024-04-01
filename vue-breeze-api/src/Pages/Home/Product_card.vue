@@ -14,16 +14,16 @@ const CartItems = ref ([]);
 //-------------------------------------------
 
 const AddToCartItem = async () => {
-
+    console.log('data',  props);
     let data = {
     quantity: '1',
     color: 'black',
     size: 'Medium',
     line_total: props.product.product_price, 
     product_id: props.product.id,
-    user_id : props.user_id.user_id,
+    user_id : 12,
   };
-console.log('data', data);
+
 await axios.post('/api/add_OrderItem', data).then(()=> {
         router.push('/add-cart');
       
