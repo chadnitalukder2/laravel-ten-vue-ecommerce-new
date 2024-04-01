@@ -1,25 +1,52 @@
 <script setup>
 import '@fortawesome/fontawesome-free/css/all.css';
-import {
-    defineProps
-} from "vue";
+import axios from 'axios';
+import {defineProps} from "vue";
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
-const props = defineProps(["product"]);
+
+const props = defineProps(["product", "user_id"]);
 import rating from '../product_details/rating.vue';
+//--------------------------------------------------
+const CartItems = ref ([]);
+//-------------------------------------------
+
+const AddToCartItem = async () => {
+
+    let data = {
+    quantity: '1',
+    color: 'black',
+    size: 'Medium',
+    line_total: props.product.product_price, 
+    product_id: props.product.id,
+    // user_id: props.user_id.user_id,
+  };
+console.log('data', props.user_id);
+await axios.post('/api/add_OrderItem', data).then(()=> {
+        router.push('/add-cart');
+      
+    });
+}
+
 
 </script>
+
 
 <template>
    
     <div class="product-card">
         <!----<div class="badge" style="z-index: 1;">Hot</div>-->
+        {{ props.user_id }}
+       
         <div class="product-tumb">
             <router-link :to="{ name: 'product-details', params: { id: props.product.id }}" style=" width: 100%; height: 100%;" >
             <img :src=" props.product.product_img" alt="">
             </router-link>
         </div>
         <div class="product_cart">
-            <p class="cart"><i class="fa-solid fa-cart-shopping"></i></p>
+            <p class="cart" @click="AddToCartItem()"><i class="fa-solid fa-cart-shopping"></i></p>
             <p class="view">
                 <router-link :to="{ name: 'product-details', params: { id: props.product.id }}" >
                     <i class="fa-solid fa-eye"></i>

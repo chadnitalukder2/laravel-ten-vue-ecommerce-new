@@ -29,16 +29,17 @@ const openModalDelete = (id) => {
 const closeModalDelete = () => {
     deleteVisibleId.value =null;
 };
+
 //--------------------------------------------
-const deleteOrder = (item) => {
-    axios.get(`/api/delete_Order/${item.id}`).then( () => {
-      notify({
-        title: "Order Item Deleted",
-        type: "success",
-      });
-      getOrders();
-    })
-}
+const deleteOrder = (id) => {
+    axios.get(`/api/delete_order_item/${id}`).then(() => {
+        notify({
+            title: "Order Item Deleted",
+            type: "success",
+        });
+        getOrderDetails();
+    });
+};
 //---------------------------------------------------
 const openModalView = (id) => {
   VisibleId.value = id;
@@ -114,16 +115,16 @@ const user = async () =>{
                   </tr>
                   <tbody v-for="item in orderDetails" :key="item.id">
                     <Modal :show="deleteVisibleId === item.id" @close="closeModalDelete">
-                      <div id="myModal" style="text-align: center;">
-                          <h4 style="margin-top: 20px; font-size: 26px; color: #636363; font-weight: 500;">Are you sure?</h4>
-                          <div class="modal-body">
-                              <p style="font-size: 14px; color: #999999;">Do you really want to delete these records? This process cannot be undone.</p>
-                          </div>
-                          <div class="modal_footer" style="padding: 20px;" >
-                              <!-- <button @close="closeModalDelete" type="button" class="secondary" >Cancel</button> -->
-                              <button @click="deleteOrder(item.id)" type="button" style="background: #f15e5e;">Delete</button>
-                          </div>   
-                      </div>  
+                    <div id="myModal" style="text-align: center;">
+                        <h4 style="margin-top: 20px; font-size: 26px; color: #636363; font-weight: 500;">Are you sure?</h4>
+                        <div class="modal-body">
+                            <p style="font-size: 14px; color: #999999;">Do you really want to delete these records? This process cannot be undone.</p>
+                        </div>
+                        <div class="modal_footer" style="padding: 20px;" >
+                            <!-- <button @close="closeModalDelete" type="button" class="secondary" >Cancel</button> -->
+                            <button @click="deleteOrder(item.id)" type="button" style="background: #f15e5e;">Delete</button>
+                        </div>   
+                    </div>  
                     </Modal>
                     <tr>
                       <td style="color: blue"># {{ item.id }}</td>
@@ -193,7 +194,7 @@ const user = async () =>{
 
            
       </div>
-    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>

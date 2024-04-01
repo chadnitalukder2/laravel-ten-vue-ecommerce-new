@@ -24,6 +24,9 @@ class ProductController extends Controller
         ->when(isset($queryParams['search']), function($query) use ($queryParams){
             return $query->where('product_name', 'like', '%'.$queryParams['search'].'%');
         })
+        ->when(isset($queryParams['sort']), function($query) use ($queryParams){
+            return $query->where('sort',$queryParams['product_name'] );
+        })
         ->get();
         
         foreach ($products as $product) {
@@ -34,7 +37,8 @@ class ProductController extends Controller
             $product->average_rating = round($averageRating, 2);
         }    
         return response()->json([
-            'products' => $products
+            'products' => $products,
+            'user_id' => Auth::user()->id,
         ], 200);
       
     }
