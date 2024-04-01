@@ -21,9 +21,9 @@ const AddToCartItem = async () => {
     size: 'Medium',
     line_total: props.product.product_price, 
     product_id: props.product.id,
-    // user_id: props.user_id.user_id,
+    user_id : props.user_id.user_id,
   };
-console.log('data', props.user_id);
+console.log('data', data);
 await axios.post('/api/add_OrderItem', data).then(()=> {
         router.push('/add-cart');
       
@@ -38,7 +38,7 @@ await axios.post('/api/add_OrderItem', data).then(()=> {
    
     <div class="product-card">
         <!----<div class="badge" style="z-index: 1;">Hot</div>-->
-        {{ props.user_id }}
+        <!-- {{ props.user_id }} -->
        
         <div class="product-tumb">
             <router-link :to="{ name: 'product-details', params: { id: props.product.id }}" style=" width: 100%; height: 100%;" >

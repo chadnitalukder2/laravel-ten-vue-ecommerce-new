@@ -22,7 +22,7 @@ const getProduct = async () => {
   let response = await axios.get("/api/get_product");
   products.value = response.data.products;
   user_id.value = response.data
-  // console.log("response", products.value);
+  // console.log("responseID", user_id.value);
 };
 //=====================================
 const category = ref([]);
