@@ -132,7 +132,10 @@ const user = async () =>{
                       <td>{{ item.order_status }}</td>
                       <td>{{ item.payment_status }}</td>
                       <td>{{ formatDate(item.created_at) }}</td>
-                      <td v-if="(item.payment_status === 'pending')" @click="openModalDelete(item.id)" style="font-size: 18px;font-weight: 600;color: #cb0505;cursor: pointer;"> Cancel </td>
+                      <td> 
+                        <p   v-if="item.order_status == 'Pending'" @click="openModalDelete(item.id)" style="color: rgb(191 42 42);cursor: pointer;">Cancel</p>
+                        <p  v-else  > Delivered</p>
+                      </td>
                       <td > 
                         <button @click="openModalView(item.id)" class="view"> View</button>
                       </td>
@@ -153,7 +156,6 @@ const user = async () =>{
                               <th style="font-size: 18px; padding: 15px 0px">Size</th>
                               <th style="font-size: 18px; padding: 15px 0px">Quantity</th>
                               <th style="font-size: 18px; padding: 15px 0px">Price</th>
-                              <th></th>
                             </tr>
                             <tbody v-for="orderItem in item.order_item" :key="orderItem.id">
                           
@@ -172,7 +174,7 @@ const user = async () =>{
                                 <td style="padding: 5px">{{ orderItem.size }}</td>
                                 <td style="padding: 5px">{{ orderItem.quantity }}</td>
                                 <td style="padding: 5px">{{ orderItem.product.product_price }}</td>
-                                <td>delete</td>
+                              
                               </tr>
                             </tbody>
                           </table>
@@ -310,6 +312,16 @@ th {
   padding: 20px 10px !important;
   border: 1px solid transparent;
   font-size: 20px;
+}
+td{
+  p{
+    font-size: 18px;
+    font-weight: 600;
+    color: rgb(61, 66, 66);
+    border-radius: 5px;
+    padding: 3px 5px;
+    background: rgba(215, 209, 209, 0.1882352941);
+  }
 }
 th,
 td {
