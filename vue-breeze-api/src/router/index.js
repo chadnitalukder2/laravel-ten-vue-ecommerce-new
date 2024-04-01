@@ -106,6 +106,12 @@ const routes = [
         meta: { requiresAuth: true, adminAuthRequired: true },
       },
       {
+        path: "/contact",
+        name: "contact",
+        component: () => import("../Pages/Admin/contact/contact.vue"),
+        meta: { requiresAuth: true, adminAuthRequired: true },
+      },
+      {
         path: "/all-user",
         name: "all-user",
         component: () => import("../Pages/Admin/user/all_user.vue"),
