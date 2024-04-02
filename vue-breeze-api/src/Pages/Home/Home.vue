@@ -99,25 +99,27 @@ const getBrand = async () => {
     width: 100%;
 }
 .card_button{
-  padding: 10px 25px;
-    font-size: 15px;
+    padding: 12px 15px;
     margin-top: 15px;
-    border-radius: 8px;
-    border: 1px solid #d1eae4;
-    background: white;
+    font-weight: 600;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background: #117964;
     transition: all .3s;
     cursor: pointer;
     
     a{
-      color: #009688;
+      color: #fff;
       text-decoration: none;
       transition: all .3s;
     
     }
     &:hover{
-        background:#d1eae4;
+        background: #fff;
+        box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.1);
+        border: 1px solid #117964;
         a{
-          color: #404144;
+          color: #117964;
         }
       }
 }

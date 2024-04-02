@@ -17,7 +17,7 @@ const routes = [
   {
     path: "/Contact", 
     name: "Contact",
-     component: () =>import("../Pages/Contact/Contact.vue")
+     component: () =>import("../Pages/Contact_page/Contact.vue")
  },
   {
     path: "/product-details/:id",

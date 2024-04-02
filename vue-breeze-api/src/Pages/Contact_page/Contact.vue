@@ -7,7 +7,7 @@
         <h1>Contact Page</h1>
         <hr style="border: 1px solid rgb(0, 150, 136); width: 25%; margin-bottom: 40px;">
         <div style="background:#fff ; width: 70%; margin: 0 auto; padding: 35px; box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.1); border-radius: 5px;">
-
+            <form>
             <div class="contact_page" >
                 <div class="contact_page_left" style="flex-basis: 50%;">
                     <div class="contact_info" >
@@ -37,6 +37,10 @@
                 <textarea type="text" placeholder="enter your massage" rows="5"></textarea>
             </div>
 
+            <div style="text-align: left; padding-top: 25px;">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
         </div>
     </div>
 </template>
@@ -57,6 +61,23 @@
     padding: 10px;
     margin-top: 28px;
     font-family: Poppins, sans-serif;
+  }
+  button{
+    padding: 8px 22px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background: #117964;
+    color: #fff;
+    cursor: pointer;
+    transition: all .3s ;
+    &:hover{
+        background: #fff;
+        color: #117964;
+        box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.1);
+        border: 1px solid #117964;
+    }
   }
 
   .contact_page{
