@@ -118,11 +118,11 @@ const user = async () =>{
                     <div id="myModal" style="text-align: center;">
                         <h4 style="margin-top: 20px; font-size: 26px; color: #636363; font-weight: 500;">Are you sure?</h4>
                         <div class="modal-body">
-                            <p style="font-size: 14px; color: #999999;">Do you really want to delete these records? This process cannot be undone.</p>
+                            <p style="font-size: 14px; color: #999999;">Do you really want to cancel these records? This process cannot be undone.</p>
                         </div>
                         <div class="modal_footer" style="padding: 20px;" >
                             <!-- <button @close="closeModalDelete" type="button" class="secondary" >Cancel</button> -->
-                            <button @click="deleteOrder(item.id)" type="button" style="background: #f15e5e;">Delete</button>
+                            <button @click="deleteOrder(item.id)" type="button" style="background: #f15e5e;">Cancel</button>
                         </div>   
                     </div>  
                     </Modal>
@@ -133,7 +133,7 @@ const user = async () =>{
                       <td>{{ item.payment_status }}</td>
                       <td>{{ formatDate(item.created_at) }}</td>
                       <td> 
-                        <p   v-if="item.order_status == 'Pending'|| 'padding'" @click="openModalDelete(item.id)" style="color: rgb(191 42 42);cursor: pointer;">Cancel</p>
+                        <p   v-if="item.order_status == 'Pending'" @click="openModalDelete(item.id)" style="color: rgb(191 42 42);cursor: pointer;">Cancel</p>
                         <p  v-else  > Delivered</p>
                       </td>
                       <td > 

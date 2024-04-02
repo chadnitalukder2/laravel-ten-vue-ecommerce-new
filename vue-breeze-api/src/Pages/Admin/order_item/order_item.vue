@@ -137,10 +137,10 @@ const updateStatus = async (item) => {
                                     <label><b>Order Status</b></label>
                                     <select v-model="item.order_status">
                                         <option disabled>orders Status </option>
-                                        <option>Pending</option>
-                                        <option>Processing</option>
-                                        <option>Received</option>
-                                        <option>Delivery</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Processing">Processing</option>
+                                        <option value="Received">Received</option>
+                                        <option value="Delivery">Delivery</option>
                                     </select>
                                 </div>
 
