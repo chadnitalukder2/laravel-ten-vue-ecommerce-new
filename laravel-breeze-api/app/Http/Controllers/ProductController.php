@@ -13,8 +13,7 @@ class ProductController extends Controller
     public function get_product(Request $request){
 
         $queryParams = $request['filter'];
-        $products = Product::orderBy('id', 'desc')
-        ->with('category', 'brand')
+        $products = Product::with('category', 'brand')
         ->when(isset($queryParams['category_id']), function($query) use ($queryParams){
             return $query->whereIn('category_id', $queryParams['category_id']);
         })
@@ -25,7 +24,15 @@ class ProductController extends Controller
             return $query->where('product_name', 'like', '%'.$queryParams['search'].'%');
         })
         ->when(isset($queryParams['sort']), function($query) use ($queryParams){
-            return $query->where('sort',$queryParams['product_name'] );
+            if($queryParams['sort'] == 'price_low_to_high'){
+                return $query->orderBy('product_price', 'asc');
+            }else if($queryParams['sort'] == 'price_high_to_low'){
+                return $query->orderBy('product_price', 'desc');
+            }else if($queryParams['sort'] == 'newest_first'){
+                return $query->orderBy('id', 'desc');
+            }else if($queryParams['sort'] == 'oldest_first'){
+                return $query->orderBy('id', 'asc');
+            }
         })
         ->get();
         

@@ -91,11 +91,11 @@ const getBrand = async () => {
                         <div class="sort" style="flex-basis: 33%; text-align: end;">
                         <div class="sort_option" >
                             <label>Sort by:</label>
-                            <select>
-                                <option value="2">Price, low to high</option>
-                                <option value="3">Price, high to low</option>
-                                <option value="4">Date, old to new</option>
-                                <option value="5">Date, new to old</option>
+                            <select v-model="filter.sort">
+                                <option value="price_low_to_high">Price, low to high</option>
+                                <option value="price_high_to_low">Price, high to low</option>
+                                <option value="oldest_first">Date, old to new</option>
+                                <option value="newest_first">Date, new to old</option>
                                 <option value="6">Alphabetically, A-Z</option>
                                 <option value="7">Alphabetically, Z-A </option>
                             </select>
