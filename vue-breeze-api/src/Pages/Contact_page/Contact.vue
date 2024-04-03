@@ -1,4 +1,11 @@
 <script setup>
+import { ref, onMounted } from "vue";
+import axios from "axios";
+import { useRouter } from "vue-router";
+const router = useRouter();
+
+
+
 
 </script>
 
@@ -7,12 +14,12 @@
         <h1>Contact Page</h1>
         <hr style="border: 1px solid rgb(0, 150, 136); width: 25%; margin-bottom: 40px;">
         <div style="background:#fff ; width: 70%; margin: 0 auto; padding: 35px; box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.1); border-radius: 5px;">
-            <form>
+            <form @submit.prevent="addMsg">
             <div class="contact_page" >
                 <div class="contact_page_left" style="flex-basis: 50%;">
                     <div class="contact_info" >
                         <label style="font-weight: bold;">Name : </label>
-                        <input type="text" placeholder="enter your name">
+                        <input type="text" placeholder="enter your name" v-model="name">
                     </div>
                     <div class="contact_info">
                         <label style="font-weight: bold;">Phone : </label>
