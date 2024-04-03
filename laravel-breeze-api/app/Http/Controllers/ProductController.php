@@ -26,13 +26,22 @@ class ProductController extends Controller
         ->when(isset($queryParams['sort']), function($query) use ($queryParams){
             if($queryParams['sort'] == 'price_low_to_high'){
                 return $query->orderBy('product_price', 'asc');
-            }else if($queryParams['sort'] == 'price_high_to_low'){
+            }
+            else if($queryParams['sort'] == 'price_high_to_low'){
                 return $query->orderBy('product_price', 'desc');
-            }else if($queryParams['sort'] == 'newest_first'){
+            }
+            else if($queryParams['sort'] == 'newest_first'){
                 return $query->orderBy('id', 'desc');
-            }else if($queryParams['sort'] == 'oldest_first'){
+            }
+            else if($queryParams['sort'] == 'oldest_first'){
                 return $query->orderBy('id', 'asc');
             }
+            else if($queryParams['sort'] == 'A_Z'){
+                return $query->orderBy('product_name', 'asc');
+            }else if($queryParams['sort'] == 'Z_A'){
+                return $query->orderBy('product_name', 'desc');
+            }
+            
         })
         ->get();
         

@@ -96,8 +96,8 @@ const getBrand = async () => {
                                 <option value="price_high_to_low">Price, high to low</option>
                                 <option value="oldest_first">Date, old to new</option>
                                 <option value="newest_first">Date, new to old</option>
-                                <option value="6">Alphabetically, A-Z</option>
-                                <option value="7">Alphabetically, Z-A </option>
+                                <option value="A_Z">Alphabetically, A-Z</option>
+                                <option value="Z_A">Alphabetically, Z-A </option>
                             </select>
                         </div>
                     </div>
