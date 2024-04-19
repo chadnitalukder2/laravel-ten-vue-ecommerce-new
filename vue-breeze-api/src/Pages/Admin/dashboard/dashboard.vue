@@ -152,7 +152,6 @@ const getUser = async () => {
                     <td>{{ item.total_amount }}</td>
                     <td>{{ item.order_status }}</td>
                     <td>{{ item.payment_status }}</td>
-                   
                 </tr>
             </tbody>
       </table>
@@ -160,7 +159,6 @@ const getUser = async () => {
 
     </div>
 </template>
-
 
 
 <style lang="scss" scoped>
