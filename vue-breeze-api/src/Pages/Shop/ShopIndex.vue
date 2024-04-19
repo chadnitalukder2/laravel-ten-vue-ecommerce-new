@@ -10,6 +10,12 @@ const router = useRouter();
 const products = ref([]);
 const category = ref([]);
 const brand = ref([]);
+const pagination = ref({
+    current_page: 1,
+    last_page: 1,
+    per_page: 10,
+    total: 1,
+});
 const filter = ref({
     search: "",
     category_id: [],
@@ -24,14 +30,25 @@ onMounted(async () => {
 });
 
  // Define a watcher
- watch(filter, (newValue, oldValue) => {
+    watch(filter, (newValue, oldValue) => {
       getProduct();
     }, { deep: true });
 
 const getProduct = async () => {
-    let response = await axios.get("/api/get_product", { params: { filter: filter.value } });
-    products.value = response.data.products;
-    // console.log("response", products.value);
+    let response = await axios.get("/api/get_product", { params: { filter: filter.value, pagination: pagination.value } }).then((response) => {
+        products.value = response.data.products.data;
+        console.log("response", response.data.products);
+        pagination.value = {
+            current_page: response.data.products.current_page,
+            last_page: response.data.products.last_page,
+            per_page: response.data.products.per_page,
+            total: response.data.products.total,
+        };
+    });
+};
+const getPaginateData = (page) => {
+    pagination.value.current_page = page;
+    getProduct();
 };
 //---------------------------------------------------
 const getCategory = async () => {
@@ -110,20 +127,16 @@ const getBrand = async () => {
                     </div>
                 </div>
             </div>
-
             </div>
 
         </div>
       
         <div class="pagination">
-            <a href="#">&laquo;</a>
-            <a href="#">1</a>
-            <a href="#" class="active">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
-            <a href="#">6</a>
-            <a href="#">&raquo;</a>
+            <p
+                v-for="item in pagination.last_page"
+                :class="item == pagination.current_page ? 'active' : '' "
+                @click="getPaginateData(item)"
+            >{{ item }} </p>
         </div>
     </div>
 </div>
@@ -236,21 +249,21 @@ const getBrand = async () => {
     justify-content: center;
 }
 .pagination {
-  display: inline-block;
+  display: flex;
   margin-left: 38%;
 }
 
-.pagination a {
+.pagination p {
   color: black;
   float: left;
   padding: 8px 16px;
   text-decoration: none;
   transition: background-color .3s;
   border: 1px solid #ddd;
-
+  cursor: pointer;
 }
 
-.pagination a.active {
+.pagination p.active {
   background-color: #62c7af;
   color: white;
   border: 1px solid #62c7af;

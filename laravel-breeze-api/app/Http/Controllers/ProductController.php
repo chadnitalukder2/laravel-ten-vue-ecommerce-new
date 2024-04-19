@@ -11,8 +11,11 @@ use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
     public function get_product(Request $request){
-
         $queryParams = $request['filter'];
+        $pagination = $request['pagination'];
+        $currentPage = $pagination['current_page'];
+        $perPage = $pagination['per_page'];
+  
         $products = Product::with('category', 'brand')
         ->when(isset($queryParams['category_id']), function($query) use ($queryParams){
             return $query->whereIn('category_id', $queryParams['category_id']);
@@ -43,7 +46,7 @@ class ProductController extends Controller
             }
             
         })
-        ->get();
+        ->paginate($perPage, ['*'], 'page', $currentPage); 
         
         foreach ($products as $product) {
             $product->product_colors = json_decode($product->product_colors);
