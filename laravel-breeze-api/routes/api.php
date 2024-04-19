@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\OrderItemsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReviewController;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -65,3 +66,4 @@ Route::get('/delete_Order/{id}', [OrderItemsController::class, 'delete_Order']);
 
 Route::get('/get_order_details', [OrderController::class, 'get_order_details']);
 
+Route::get('/all_product', [ReportController::class, 'all_product']);
