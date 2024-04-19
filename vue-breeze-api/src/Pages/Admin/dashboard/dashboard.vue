@@ -5,10 +5,15 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 //-----------------------------------------
 const products = ref([]);
-
+const totalSelling = ref([])
+const user = ref([]);
+const total_amount = ref([]);
 //--------------------------------------
 onMounted(async () => {
   allProduct();
+  sellingProducts();
+  getUser();
+  totalAmount()
 });
 //-----------------------------
 const allProduct =  async () =>{
@@ -16,6 +21,28 @@ const allProduct =  async () =>{
   products.value = response.data.products;
 }
 
+const totalAmount = async () => {
+  let response = await axios.get("/api/total_amount");
+  total_amount.value = response.data.orders
+};
+
+const total = () => {
+  let result = 0;
+  for (let i = 0; i < total_amount.value.length; i++) {
+    result += total_amount.value[i].total_amount;
+  }
+  return result;
+}
+
+const sellingProducts = async () =>{
+  let response = await axios.get("/api/selling_product");
+  totalSelling.value = response.data.orderItems;
+}
+
+const getUser = async () => {
+  let response = await axios.get("/api/get_user");
+  user.value = response.data.user;
+};
 </script>
 
 <template>
@@ -35,7 +62,7 @@ const allProduct =  async () =>{
           </div>
           <div class="describ">
             <div class="details">
-              <h1>33</h1>
+              <h1>{{ totalSelling.length }}</h1>
               <p>Total Selling Product</p>
             </div>
             <div class="icon">
@@ -44,7 +71,7 @@ const allProduct =  async () =>{
           </div>
           <div class="describ">
             <div class="details">
-              <h1>33</h1>
+              <h1>{{ total() }}</h1>
               <p>Total Amount</p>
             </div>
             <div class="icon">
@@ -53,7 +80,7 @@ const allProduct =  async () =>{
           </div>
           <div class="describ">
             <div class="details">
-              <h1>33</h1>
+              <h1>{{ user.length }}</h1>
               <p>Total Customers</p>
             </div>
             <div class="icon">
@@ -69,12 +96,12 @@ const allProduct =  async () =>{
 
 <style lang="scss" scoped>
 .container{
-  padding: 50px ;
   width: 100%;
   text-align: center;
   background: #d7d1d130;
 
   .overView{
+    margin: 50px;
     background: #fff;
     border-radius: 6px;
     padding: 20px;
