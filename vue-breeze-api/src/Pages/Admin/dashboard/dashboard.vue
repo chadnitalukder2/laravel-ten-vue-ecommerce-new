@@ -65,6 +65,8 @@ const allProduct =  async () =>{
     </div>
 </template>
 
+
+
 <style lang="scss" scoped>
 .container{
   padding: 50px ;
