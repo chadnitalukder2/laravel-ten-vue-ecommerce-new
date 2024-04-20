@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Arr;
 use App\Models\Category;
 use App\Models\Product;
 use Carbon\Carbon;
@@ -11,10 +12,11 @@ use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
     public function get_product(Request $request){
-        $queryParams = $request['filter'];
-        $pagination = $request['pagination'];
-        $currentPage = $pagination['current_page'];
-        $perPage = $pagination['per_page'];
+
+        $queryParams = Arr::get($request,'filter', [] );
+        $pagination = Arr::get($request, 'pagination', []);
+        $currentPage = Arr::get($pagination, 'current_page', 1);
+        $perPage = Arr::get($pagination, 'per_page', 10 );
   
         $products = Product::with('category', 'brand')
         ->when(isset($queryParams['category_id']), function($query) use ($queryParams){

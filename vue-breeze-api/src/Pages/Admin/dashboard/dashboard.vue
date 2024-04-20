@@ -1,4 +1,5 @@
 <script setup>
+import productTable from "../product/product_table.vue"
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
@@ -94,36 +95,7 @@ const getUser = async () => {
       <div class="overView">
         <h1>Latest Products</h1>
         <div style="width: 100%; border-bottom: 1px solid #857f7f30;"  ></div>
-        <table id="customers">
-        <tr>
-          <th># ID</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Category Name</th>
-          <th>Brand Name</th>
-          <th>Image</th>
-        </tr>
-        <tbody v-for="item in products" :key="item.id">
-          <tr>
-            <td style="color: blue">
-              <router-link
-                :to="{ name: 'edit-product', params: { id: item.id } }"
-                ># {{ item.id }}
-              </router-link>
-            </td>
-            <td>{{ item.product_name }}</td>
-            <td>{{ item.product_price }}</td>
-            <td>{{ item.product_quantity }}</td>
-            <td>{{ item.category.category_name }}</td>
-            <td>{{ item.brand.brand_name }}</td>
-            <td style="width: 70px; height: 60px">
-              <img :src="item.product_img" style="width: 100%; height: 100%" />
-            </td>
-
-          </tr>
-        </tbody>
-      </table>
+       <productTable/>
       </div>
 
       <div class="overView">
