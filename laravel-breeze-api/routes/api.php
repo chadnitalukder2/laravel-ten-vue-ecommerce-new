@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\OrderItemsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReviewController;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -59,8 +61,11 @@ Route::get('/delete_order_item/{id}', [OrderController::class, 'delete_order_ite
 Route::get('/getOrderItemByOrderId/{id}', [OrderController::class, 'getOrderItemByOrderId']);
 Route::post('/update_order_status/{id}', [OrderController::class, 'update_order_status']);
 
+Route::get('/get_orders', [OrderItemsController::class, 'get_orders']);
+Route::get('/delete_Order/{id}', [OrderItemsController::class, 'delete_Order']);
 
+Route::get('/get_order_details', [OrderController::class, 'get_order_details']);
 
-
-
-
+Route::get('/all_product', [ReportController::class, 'all_product']);
+Route::get('/selling_product', [ReportController::class, 'selling_product']);
+Route::get('/total_amount', [ReportController::class, 'total_amount']);

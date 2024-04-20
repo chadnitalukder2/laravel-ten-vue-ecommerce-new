@@ -104,4 +104,16 @@ class OrderItemsController extends Controller
     {
         //
     }
+    public function get_orders(){
+        $userId =  Auth::user()->id;
+        $orderItem = OrderItems::orderBy('id', 'desc')->where('user_id', $userId)->with( 'product')->get();
+
+        return response()->json([
+            'orderItem' => $orderItem
+        ], 200);
+    }
+    public function delete_Order($id){
+        $orderItem = OrderItems::findOrFail($id);
+        $orderItem->delete();
+    }
 }

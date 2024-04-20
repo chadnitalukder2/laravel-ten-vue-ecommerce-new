@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Arr;
 use App\Models\Category;
 use App\Models\Product;
 use Carbon\Carbon;
@@ -10,9 +11,44 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    public function get_product(){
-        
-        $products = Product::orderBy('id', 'desc')->with('category', 'brand')->get();
+    public function get_product(Request $request){
+
+        $queryParams = Arr::get($request,'filter', [] );
+        $pagination = Arr::get($request, 'pagination', []);
+        $currentPage = Arr::get($pagination, 'current_page', 1);
+        $perPage = Arr::get($pagination, 'per_page', 10 );
+  
+        $products = Product::with('category', 'brand')
+        ->when(isset($queryParams['category_id']), function($query) use ($queryParams){
+            return $query->whereIn('category_id', $queryParams['category_id']);
+        })
+        ->when(isset($queryParams['brand_id']), function($query) use ($queryParams){
+            return $query->whereIn('brand_id', $queryParams['brand_id']);
+        })
+        ->when(isset($queryParams['search']), function($query) use ($queryParams){
+            return $query->where('product_name', 'like', '%'.$queryParams['search'].'%');
+        })
+        ->when(isset($queryParams['sort']), function($query) use ($queryParams){
+            if($queryParams['sort'] == 'price_low_to_high'){
+                return $query->orderBy('product_price', 'asc');
+            }
+            else if($queryParams['sort'] == 'price_high_to_low'){
+                return $query->orderBy('product_price', 'desc');
+            }
+            else if($queryParams['sort'] == 'newest_first'){
+                return $query->orderBy('id', 'desc');
+            }
+            else if($queryParams['sort'] == 'oldest_first'){
+                return $query->orderBy('id', 'asc');
+            }
+            else if($queryParams['sort'] == 'A_Z'){
+                return $query->orderBy('product_name', 'asc');
+            }else if($queryParams['sort'] == 'Z_A'){
+                return $query->orderBy('product_name', 'desc');
+            }
+            
+        })
+        ->paginate($perPage, ['*'], 'page', $currentPage); 
         
         foreach ($products as $product) {
             $product->product_colors = json_decode($product->product_colors);
@@ -21,7 +57,8 @@ class ProductController extends Controller
             $product->average_rating = round($averageRating, 2);
         }    
         return response()->json([
-            'products' => $products
+            'products' => $products,
+            'user_id' => Auth::user()->id,
         ], 200);
       
     }

@@ -16,7 +16,7 @@ export default {
                This is a simple e-commerce project built with Laravel and Vue.js. It is a full-stack project that includes authentication, product management, and shopping cart functionality. The project is built with Laravel Breeze and Vue 3.
             </p>
             <button class="btn btn-darken btn-inline">
-               <router-link :to="{ name: 'Store' }" active-class="active">
+               <router-link :to="{ name: 'Shop' }" active-class="active">
                   Our Products<i class="bx bx-right-arrow-alt"></i>
                </router-link>
             </button>
@@ -50,7 +50,7 @@ button {
 }
 
 .section {
-    background:#0b1412b8;;
+    background:#159f83;;
 }
 
 img,

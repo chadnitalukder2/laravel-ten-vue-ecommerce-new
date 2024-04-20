@@ -1,7 +1,7 @@
 <script setup>
 import Card from "../Home/Product_card.vue";
 
-import {ref,onMounted} from "vue";
+import {ref,onMounted, watch} from "vue";
 import axios from "axios";
 import { useRouter} from "vue-router";
 const router = useRouter();
@@ -10,6 +10,18 @@ const router = useRouter();
 const products = ref([]);
 const category = ref([]);
 const brand = ref([]);
+const pagination = ref({
+    current_page: 1,
+    last_page: 1,
+    per_page: 10,
+    total: 1,
+});
+const filter = ref({
+    search: "",
+    category_id: [],
+    brand_id: [],
+    sort: "",
+});
 
 onMounted(async () => {
     getProduct();
@@ -17,10 +29,26 @@ onMounted(async () => {
     getBrand();
 });
 
+ // Define a watcher
+    watch(filter, (newValue, oldValue) => {
+      getProduct();
+    }, { deep: true });
+
 const getProduct = async () => {
-    let response = await axios.get("/api/get_product");
-    products.value = response.data.products;
-    // console.log("response", products.value);
+    let response = await axios.get("/api/get_product", { params: { filter: filter.value, pagination: pagination.value } }).then((response) => {
+        products.value = response.data.products.data;
+        console.log("response", response.data.products);
+        pagination.value = {
+            current_page: response.data.products.current_page,
+            last_page: response.data.products.last_page,
+            per_page: response.data.products.per_page,
+            total: response.data.products.total,
+        };
+    });
+};
+const getPaginateData = (page) => {
+    pagination.value.current_page = page;
+    getProduct();
 };
 //---------------------------------------------------
 const getCategory = async () => {
@@ -51,20 +79,22 @@ const getBrand = async () => {
                </div>
 
                <div class="category_filter" v-for=" item in category" :key="item.id">
-                <p>
-                    <a href="#">{{ item.category_name }}</a>
-                </p>
+                    <div>
+                        <p> {{ item.category_name }}</p>
+                        <input type="checkbox" :value="item.id" v-model="filter.category_id">
+
+                    </div>
                </div>
 
                <div style="display: flex; align-items: center; gap: 15px; padding-bottom: 8px; padding-top: 20px;">
                 <i  class="fa-solid fa-arrow-down" style="color: #0d2235; font-size: 14px;"></i>
                 <h1 style="font-size: 18px; font-family: Poppins, sans-serif; font-weight: 800; color: #0d2235;">BRAND</h1>
                </div>
-
                <div class="category_filter" v-for=" item in brand" :key="item.id">
-                <p>
-                    <a href="#">{{ item.brand_name }}</a>
-                </p>
+                    <div>
+                        <p>{{ item.brand_name }}</p>
+                        <input type="checkbox" :value="item.id" v-model="filter.brand_id">
+                    </div>
                </div>
             </div>
             <div class="righ_content" style="flex-basis: 80%;">
@@ -72,21 +102,19 @@ const getBrand = async () => {
                 <div class="heading">
                         
                         <div class="search_box" style="flex-basis: 100%;">
-                            <input type="text" placeholder="Search.." name="search">
+                            <input  v-model="filter.search" type="text" placeholder="Search.." name="search">
                             <button type="submit"><i class="fa fa-search"></i></button>
                         </div>
                         <div class="sort" style="flex-basis: 33%; text-align: end;">
                         <div class="sort_option" >
                             <label>Sort by:</label>
-                            <select>
-                                <option value="0">Best selling </option>
-                                <option value="1">Featured</option>
-                                <option value="2">Price, low to high</option>
-                                <option value="3">Price, high to low</option>
-                                <option value="4">Date, old to new</option>
-                                <option value="5">Date, new to old</option>
-                                <option value="6">Alphabetically, A-Z</option>
-                                <option value="7">Alphabetically, Z-A </option>
+                            <select v-model="filter.sort">
+                                <option value="price_low_to_high">Price, low to high</option>
+                                <option value="price_high_to_low">Price, high to low</option>
+                                <option value="oldest_first">Date, old to new</option>
+                                <option value="newest_first">Date, new to old</option>
+                                <option value="A_Z">Alphabetically, A-Z</option>
+                                <option value="Z_A">Alphabetically, Z-A </option>
                             </select>
                         </div>
                     </div>
@@ -99,20 +127,16 @@ const getBrand = async () => {
                     </div>
                 </div>
             </div>
-
             </div>
 
         </div>
       
         <div class="pagination">
-            <a href="#">&laquo;</a>
-            <a href="#">1</a>
-            <a href="#" class="active">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
-            <a href="#">6</a>
-            <a href="#">&raquo;</a>
+            <p
+                v-for="item in pagination.last_page"
+                :class="item == pagination.current_page ? 'active' : '' "
+                @click="getPaginateData(item)"
+            >{{ item }} </p>
         </div>
     </div>
 </div>
@@ -121,23 +145,22 @@ const getBrand = async () => {
 <style lang="scss" scoped>
 
 .category_filter{
-    p{
-    line-height: 44px;
-    background-color: #efefef;
-    border-radius: 5px;
-    margin: 0px;
-    margin-bottom: 5px;
-    padding: 0 30px;
-    transition: background .3s;
-    display: block;
-    font-weight: 500;
-    a{
-        text-decoration: none;
-        color:#505157;
-        &:hover{
-            color: #62c7af;
+    div{
+        display: flex;
+        justify-content: space-between;
+        line-height: 44px;
+        background-color: #efefef;
+        border-radius: 5px;
+        margin: 0px;
+        margin-bottom: 5px;
+        padding: 0 30px;
+
+        p{
+            margin: 0px;
+            font-weight: 500;
+            color:#505157;
+               
         }
-    }
     }
 }
 .container {
@@ -226,21 +249,21 @@ const getBrand = async () => {
     justify-content: center;
 }
 .pagination {
-  display: inline-block;
+  display: flex;
   margin-left: 38%;
 }
 
-.pagination a {
+.pagination p {
   color: black;
   float: left;
   padding: 8px 16px;
   text-decoration: none;
   transition: background-color .3s;
   border: 1px solid #ddd;
-
+  cursor: pointer;
 }
 
-.pagination a.active {
+.pagination p.active {
   background-color: #62c7af;
   color: white;
   border: 1px solid #62c7af;

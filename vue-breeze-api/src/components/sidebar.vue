@@ -1,10 +1,11 @@
 <template>
     <div class="side-bar-wrapper">
-     
+        <router-link active-class="active" :to="{ name: 'dashboard' }">Dashboard</router-link>
         <router-link active-class="active" :to="{ name: 'all-category' }">All Category</router-link>
         <router-link active-class="active"  :to="{ name: 'all-brand' }">All Brand</router-link>
         <router-link active-class="active"  :to="{ name: 'all-product' }">All Product</router-link>
         <router-link active-class="active"  :to="{ name: 'all-order' }">All Order Item</router-link>
+        <router-link active-class="active"  :to="{ name: 'contact' }">Contact</router-link>
         <router-link  active-class="active"  :to="{ name: 'all-user' }">All User</router-link>
     </div>
 </template>

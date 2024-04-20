@@ -1,24 +1,27 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 const router = useRouter();
 import { useRoute } from "vue-router";
 const route = useRoute();
 //---------------------------------------------------
-const form = ref([]);
+const form = ref({});
 //---------------------------------------------------
 onMounted(async () => {
+  editUser();
+});
+
+watch(() => route.params.id, () => {
   editUser();
 });
 
 //---------------------------------------------------
 const editUser = async () => {
   const id = route.params.id;
-  console.log("routhiuhuunje", id);
+  console.log("route id:", id);
   let response = await axios.get(`/api/edit_user/${id}`);
   form.value = response.data.user;
-  // console.log('responseydyhfb', response.data.product);
 };
 
 //---------------------------------------------------
@@ -27,11 +30,11 @@ const updateUser = async () => {
   let data = {
     name: form.value.name,
     email: form.value.email,
+    role: form.value.role,
   };
 
-  // console.log({formData});
   let response = await axios.post(`/api/update_user/${id}`, data);
-  // console.log('Response:', response);
+  console.log('Response:', response);
   router.push("/all-user");
 };
 </script>
@@ -58,6 +61,15 @@ const updateUser = async () => {
         name="psw"
         required
       />
+      <label for="psw"><b>User Role</b></label>
+      <input
+        v-model="form.role"
+        type="text"
+        placeholder="user role"
+        name="role" 
+        required
+      />
+      
 
       <button type="submit">Update User</button>
     </div>
@@ -73,7 +85,8 @@ h1 {
 form {
   border: 1px solid #f1f1f1;
   margin: 0 auto;
-  /* height: 100vh; */
+  height: 100%; 
+  width: 50%;
   margin-top: 100px;
   border-radius: 8px;
   padding: 20px;

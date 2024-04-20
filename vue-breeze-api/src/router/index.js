@@ -2,12 +2,23 @@ import { createRouter, createWebHistory } from "vue-router";
 import axios from "axios";
 
 import Home from "../Pages/Home/Home.vue";
-import Store from "../Pages/Store/StoreIndex.vue";
+import Shop from "../Pages/Shop/ShopIndex.vue";
 import Admin from "../Pages/Admin/Index.vue"
 
 const routes = [
   { path: "/", name: "Home", component: Home },
-  { path: "/store", name: "Store", component: Store },
+  { path: "/Shop", name: "Shop", component: Shop },
+  {
+     path: "/Profile", 
+     name: "Profile",
+     meta: { requiresAuth: true },
+      component: () =>import("../Pages/Profile/Profile.vue")
+  },
+  {
+    path: "/Contact", 
+    name: "Contact",
+     component: () =>import("../Pages/Contact_page/Contact.vue")
+ },
   {
     path: "/product-details/:id",
     name: "product-details",
@@ -92,6 +103,12 @@ const routes = [
         path: "/add-brand",
         name: "add-brand",
         component: () => import("../Pages/Admin/brand/add_brand.vue"),
+        meta: { requiresAuth: true, adminAuthRequired: true },
+      },
+      {
+        path: "/contact",
+        name: "contact",
+        component: () => import("../Pages/Admin/contact/contact.vue"),
         meta: { requiresAuth: true, adminAuthRequired: true },
       },
       {
