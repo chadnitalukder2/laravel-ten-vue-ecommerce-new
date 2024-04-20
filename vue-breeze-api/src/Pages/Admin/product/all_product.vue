@@ -25,6 +25,29 @@ h1 {
 }
 .container {
   width: 100%;
+
+  .table-box {
+  padding: 50px;
+  border-radius: 8px;
+
+  .btn {
+    text-align: right;
+    padding-bottom: 10px;
+    button {
+      padding: 10px 20px;
+      border: 1px solid #ddd;
+      background: #189877;
+      border-radius: 6px;
+      cursor: pointer;
+      a {
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 500;
+        color: #fff;
+      }
+    }
+  }
+}
 }
 
 </style>

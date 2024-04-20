@@ -95,7 +95,7 @@ const closeModalDelete = () => {
         <td>{{ item.product_quantity }}</td>
         <td>{{ item.category.category_name }}</td>
         <td>{{ item.brand.brand_name }}</td>
-        <td style="width: 120px; height: 100px">
+        <td style="width: 60px; height: 40px">
           <img :src="item.product_img" style="width: 100%; height: 100%" />
         </td>
 
@@ -135,28 +135,7 @@ table {
   overflow: hidden;
 }
 
-.table-box {
-  padding: 50px;
-  border-radius: 8px;
 
-  .btn {
-    text-align: right;
-    padding-bottom: 10px;
-    button {
-      padding: 10px 20px;
-      border: 1px solid #ddd;
-      background: #189877;
-      border-radius: 6px;
-      cursor: pointer;
-      a {
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: 500;
-        color: #fff;
-      }
-    }
-  }
-}
 
 #customers {
   font-family: Arial, Helvetica, sans-serif;
