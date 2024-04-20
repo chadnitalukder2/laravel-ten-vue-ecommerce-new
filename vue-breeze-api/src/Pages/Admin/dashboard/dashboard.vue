@@ -1,6 +1,7 @@
 <script setup>
 import productTable from "../product/product_table.vue";
 import orderTable from "../order_item/order_table.vue";
+import Chart from "./Chart.vue";
 
 import { ref, onMounted } from "vue";
 import axios from "axios";
@@ -93,7 +94,7 @@ const getUser = async () => {
           </div>
         </div>
       </div>
-
+      <Chart/>
       <div class="overView">
         <h1>Latest Products</h1>
         <div style="width: 100%; border-bottom: 1px solid #857f7f30;"  ></div>
