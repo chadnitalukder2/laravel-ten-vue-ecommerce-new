@@ -20,7 +20,7 @@ onMounted(async () => {
 
 const getProduct = async () => {
   let response = await axios.get("/api/get_product");
-  products.value = response.data.products;
+  products.value = response.data.products.data;
   user_id.value = response.data.user_id
   console.log("responseID", user_id.value);
 };
