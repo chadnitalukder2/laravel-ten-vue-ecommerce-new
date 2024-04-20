@@ -1,6 +1,6 @@
 @ -0,0 +1,29 @@
 <template>
-    <BarChart :chartData="testData" />
+    <BarChart :chartData="monthly_order_report" :width="40"  />
   </template>
   
   <script lang="ts">
@@ -13,18 +13,19 @@
   export default defineComponent({
     name: 'Home',
     components: { BarChart },
-    setup() {
-      const testData = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        datasets: [
-          {
-            data: [65, 59, 80, 81, 56, 55, 40, 60, 70, 80, 90, 100],
-            backgroundColor: ['#77CEFF', '#0079AF', '#123E6B', '#97B0C4', '#A5C8ED'],
-          },
-        ],
-      };
+    props: ["monthly_order_report"],
+    // setup() {
+    //   const testData = {
+    //     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    //     datasets: [
+    //       {
+    //         data: [65, 59, 80, 81, 56, 55, 40, 60, 70, 80, 90, 100],
+    //         backgroundColor: ['#77CEFF', '#0079AF', '#123E6B', '#97B0C4', '#A5C8ED'],
+    //       },
+    //     ],
+    //   };
   
-      return { testData };
-    },
+    //   return { testData };
+    // },
   });
   </script>

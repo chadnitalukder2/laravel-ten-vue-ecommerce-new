@@ -15,6 +15,17 @@ class ReportController extends Controller
         $this->middleware('auth:sanctum');
     }
 
+    public function prepareMonthlyReport(){
+        $monthlyReport = Order::selectRaw('sum(total_amount) as total_amount, MONTH(created_at) as month')
+        ->where('payment_status', 'Paid')
+        ->whereYear('created_at', date('Y'))
+        ->groupBy('month')
+        ->orderBy('month', 'asc')
+        ->get();
+
+        return $monthlyReport;
+    }
+
     public function reports(){
         $products = Product::with('category', 'brand')->orderBy('id', 'desc')->get();
         $orderItems = OrderItems::where('status', 'ordered')->count();
@@ -26,6 +37,7 @@ class ReportController extends Controller
             'orderItems' => $orderItems,
             'orders' => $orders,
             'total_users' => $total_users,
+            'monthly_order_report' => $this->prepareMonthlyReport(),
         ], 200);
     }
 

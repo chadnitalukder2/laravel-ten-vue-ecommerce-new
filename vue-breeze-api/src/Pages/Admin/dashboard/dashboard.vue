@@ -13,6 +13,7 @@ const totalSelling = ref([])
 const user = ref([]);
 const total_amount = ref([]);
 const total_users = ref([]);
+const monthly_order_report= ref([]);
 //--------------------------------------
 onMounted(async () => {
   getReports()
@@ -25,7 +26,46 @@ const getReports =  async () =>{
   total_amount.value = response.data.orders
   totalSelling.value = response.data.orderItems;
   total_users.value = response.data.total_users;
+
+  prepareReport(response.data.monthly_order_report);
+
   console.log(response.data);
+}
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+const prepareReport = (data) => {
+  let labels = [];
+  let amount = [];
+  let backgroundColor = ['#77CEFF', '#0079AF', '#123E6B', '#97B0C4', '#A5C8ED'];
+  
+  for (let i = 0; i < data.length; i++) {
+    labels.push(months[data[i].month  -1]);
+    amount.push(data[i].total_amount);
+  }
+  
+  monthly_order_report.value = {
+    labels: labels,
+    datasets: [
+      {
+        data: amount,
+        backgroundColor: backgroundColor,
+      },
+    ],
+  };
 }
 
 </script>
@@ -74,7 +114,12 @@ const getReports =  async () =>{
           </div>
         </div>
       </div>
-      <Chart/>
+      <div class="overView">
+        <h1>Latest Orders</h1>
+        <div style="width: 100%; border-bottom: 1px solid #857f7f30;"  ></div>
+        <Chart :monthly_order_report="monthly_order_report" />
+      </div>
+     
       <div class="overView">
         <h1>Latest Products</h1>
         <div style="width: 100%; border-bottom: 1px solid #857f7f30;"  ></div>
