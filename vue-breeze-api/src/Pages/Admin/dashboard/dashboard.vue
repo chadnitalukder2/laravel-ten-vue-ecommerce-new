@@ -12,42 +12,22 @@ const products = ref([]);
 const totalSelling = ref([])
 const user = ref([]);
 const total_amount = ref([]);
+const total_users = ref([]);
 //--------------------------------------
 onMounted(async () => {
-  allProduct();
-  sellingProducts();
-  getUser();
-  totalAmount()
+  getReports()
 });
 //-----------------------------
-const allProduct =  async () =>{
-  let response = await axios.get("/api/all_product");
+
+const getReports =  async () =>{
+  let response = await axios.get("/api/reports");
   products.value = response.data.products;
-  console.log('product', products.value)
-}
-
-const totalAmount = async () => {
-  let response = await axios.get("/api/total_amount");
   total_amount.value = response.data.orders
-};
-
-const total = () => {
-  let result = 0;
-  for (let i = 0; i < total_amount.value.length; i++) {
-    result += total_amount.value[i].total_amount;
-  }
-  return result;
-}
-
-const sellingProducts = async () =>{
-  let response = await axios.get("/api/selling_product");
   totalSelling.value = response.data.orderItems;
+  total_users.value = response.data.total_users;
+  console.log(response.data);
 }
 
-const getUser = async () => {
-  let response = await axios.get("/api/get_user");
-  user.value = response.data.user;
-};
 </script>
 
 <template>
@@ -58,7 +38,7 @@ const getUser = async () => {
         <div style="display: flex; gap: 20px; justify-content: space-between;">
           <div class="describ">
             <div class="details">
-              <h1>{{ products.length }}</h1>
+              <h1>{{ products }}</h1>
               <p>Total Product</p>
             </div>
             <div class="icon">
@@ -67,7 +47,7 @@ const getUser = async () => {
           </div>
           <div class="describ">
             <div class="details">
-              <h1>{{ totalSelling.length }}</h1>
+              <h1>{{ totalSelling }}</h1>
               <p>Total Selling Product</p>
             </div>
             <div class="icon">
@@ -76,7 +56,7 @@ const getUser = async () => {
           </div>
           <div class="describ">
             <div class="details">
-              <h1>{{ total() }}</h1>
+              <h1>{{ total_amount }}</h1>
               <p>Total Amount</p>
             </div>
             <div class="icon">
@@ -85,7 +65,7 @@ const getUser = async () => {
           </div>
           <div class="describ">
             <div class="details">
-              <h1>{{ user.length }}</h1>
+              <h1>{{ total_users }}</h1>
               <p>Total Customers</p>
             </div>
             <div class="icon">
