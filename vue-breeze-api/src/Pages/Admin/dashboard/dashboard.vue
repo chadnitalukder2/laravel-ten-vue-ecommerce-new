@@ -1,5 +1,7 @@
 <script setup>
-import productTable from "../product/product_table.vue"
+import productTable from "../product/product_table.vue";
+import orderTable from "../order_item/order_table.vue";
+
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
@@ -101,32 +103,7 @@ const getUser = async () => {
       <div class="overView">
         <h1>Latest Orders</h1>
         <div style="width: 100%; border-bottom: 1px solid #857f7f30;"  ></div>
-        <table id="customers">
-          <tr>
-                <th># ID</th>
-                <th>User Id</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Phone</th>
-                <th>Total Amount</th>
-                <th>Order Status</th>
-                <th>Payment Status</th>
-            </tr>
-            <tbody v-for="item in total_amount" :key="item.id">
-                <tr>
-                    <td style=""># {{ item.id }}</td>
-                    <td>{{ item.user_id }}</td>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.email }}</td>
-                    <td>{{ item.address }}</td>
-                    <td>{{ item.phone }}</td>
-                    <td>{{ item.total_amount }}</td>
-                    <td>{{ item.order_status }}</td>
-                    <td>{{ item.payment_status }}</td>
-                </tr>
-            </tbody>
-      </table>
+       <orderTable/>
       </div>
 
     </div>
@@ -184,58 +161,6 @@ const getUser = async () => {
   }
 }
 
-table {
-  border-radius: 6px;
-  overflow: hidden;
-  margin-top: 20px;
-}
 
-.table-box {
-  padding: 50px;
-  border-radius: 8px;
-
-  .btn {
-    text-align: right;
-    padding-bottom: 10px;
-    button {
-      padding: 10px 20px;
-      border: 1px solid #ddd;
-      background: #189877;
-      border-radius: 6px;
-      cursor: pointer;
-      a {
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: 500;
-        color: #fff;
-      }
-    }
-  }
-}
-
-#customers {
-  font-family: Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-#customers td,
-#customers th {
-  border: 1px solid #f3ededad;
-  padding: 15px 15px;
-  text-align: left;
-}
-
-#customers tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-#customers th {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  text-align: left;
-  background-color: rgb(237 236 236 / 68%);
-  color: #444;
-}
 
 </style>
