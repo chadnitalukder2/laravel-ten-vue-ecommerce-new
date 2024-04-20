@@ -1,5 +1,5 @@
 <template>
-    <BarChart :chartData="testData" />
+    <BarChart :chartData="monthly_order_report" />
   </template>
   
   <script lang="ts">
@@ -12,8 +12,10 @@
   export default defineComponent({
     name: 'Home',
     components: { BarChart },
+    props: ["monthly_order_report"],
     setup() {
-      const testData = {
+    
+      const chartData = {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
         datasets: [
           {
@@ -23,7 +25,7 @@
         ],
       };
   
-      return { testData };
+      return { chartData };
     },
   });
   </script>

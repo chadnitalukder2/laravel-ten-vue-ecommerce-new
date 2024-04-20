@@ -8,50 +8,64 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 const router = useRouter();
 //-----------------------------------------
-const products = ref([]);
-const totalSelling = ref([])
-const user = ref([]);
-const total_amount = ref([]);
+const products = ref(0);
+const totalSelling = ref(0)
+const user = ref(0);
+const total_amount = ref(0);
+const monthly_order_report= ref([]);
 //--------------------------------------
 onMounted(async () => {
-  allProduct();
-  sellingProducts();
-  getUser();
-  totalAmount()
+  getReports();
 });
-//-----------------------------
-const allProduct =  async () =>{
-  let response = await axios.get("/api/all_product");
-  products.value = response.data.products;
-}
-
-const totalAmount = async () => {
-  let response = await axios.get("/api/total_amount");
-  total_amount.value = response.data.orders
-};
 
 const getReports =  async () =>{
   let response = await axios.get("/api/reports");
+  total_amount.value = response.data.total_paid_amount;
+  products.value = response.data.products;
+  totalSelling.value = response.data.total_order_items;
+  user.value = response.data.total_users;
+  
+  prepareReport(response.data.monthly_order_report);
+
   console.log(response.data);
 }
 
-const total = () => {
-  let result = 0;
-  for (let i = 0; i < total_amount.value.length; i++) {
-    result += total_amount.value[i].total_amount;
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+const prepareReport = (data) => {
+  let labels = [];
+  let amount = [];
+  let backgroundColor = ['#77CEFF', '#0079AF', '#123E6B', '#97B0C4', '#A5C8ED'];
+  
+  for (let i = 0; i < data.length; i++) {
+    labels.push(months[data[i].month  -1]);
+    amount.push(data[i].total_amount);
   }
-  return result;
+  
+  monthly_order_report.value = {
+    labels: labels,
+    datasets: [
+      {
+        data: amount,
+        backgroundColor: backgroundColor,
+      },
+    ],
+  };
 }
 
-const sellingProducts = async () =>{
-  let response = await axios.get("/api/selling_product");
-  totalSelling.value = response.data.orderItems;
-}
-
-const getUser = async () => {
-  let response = await axios.get("/api/get_user");
-  user.value = response.data.user;
-};
 </script>
 
 <template>
@@ -62,7 +76,7 @@ const getUser = async () => {
         <div style="display: flex; gap: 20px; justify-content: space-between;">
           <div class="describ">
             <div class="details">
-              <h1>{{ products.length }}</h1>
+              <h1>{{ products }}</h1>
               <p>Total Product</p>
             </div>
             <div class="icon">
@@ -71,7 +85,7 @@ const getUser = async () => {
           </div>
           <div class="describ">
             <div class="details">
-              <h1>{{ totalSelling.length }}</h1>
+              <h1>{{ totalSelling }}</h1>
               <p>Total Selling Product</p>
             </div>
             <div class="icon">
@@ -80,7 +94,7 @@ const getUser = async () => {
           </div>
           <div class="describ">
             <div class="details">
-              <h1>{{ total() }}</h1>
+              <h1>{{ total_amount }}</h1>
               <p>Total Amount</p>
             </div>
             <div class="icon">
@@ -89,7 +103,7 @@ const getUser = async () => {
           </div>
           <div class="describ">
             <div class="details">
-              <h1>{{ user.length }}</h1>
+              <h1>{{ user }}</h1>
               <p>Total Customers</p>
             </div>
             <div class="icon">
@@ -99,7 +113,7 @@ const getUser = async () => {
         </div>
       </div>
 
-      <Chart />
+      <Chart :monthly_order_report="monthly_order_report" />
 
       <div class="overView">
         <h1>Latest Products</h1>
