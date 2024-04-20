@@ -69,3 +69,4 @@ Route::get('/get_order_details', [OrderController::class, 'get_order_details']);
 Route::get('/all_product', [ReportController::class, 'all_product']);
 Route::get('/selling_product', [ReportController::class, 'selling_product']);
 Route::get('/total_amount', [ReportController::class, 'total_amount']);
+Route::get('/reports', [ReportController::class, 'total_amount']);

@@ -7,14 +7,13 @@ import {
 import rating from '../product_details/rating.vue';
 
 import axios from 'axios';
-import {defineProps} from "vue";
+
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
 
 
 const props = defineProps(["product", "user_id"]);
-import rating from '../product_details/rating.vue';
 //--------------------------------------------------
 const CartItems = ref ([]);
 //-------------------------------------------

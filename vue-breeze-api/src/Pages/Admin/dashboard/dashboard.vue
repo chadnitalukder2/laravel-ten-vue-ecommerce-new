@@ -1,4 +1,5 @@
 <script setup>
+import Chart from './Chart.vue';
 import productTable from "../product/product_table.vue";
 import orderTable from "../order_item/order_table.vue";
 
@@ -22,13 +23,17 @@ onMounted(async () => {
 const allProduct =  async () =>{
   let response = await axios.get("/api/all_product");
   products.value = response.data.products;
-  console.log('product', products.value)
 }
 
 const totalAmount = async () => {
   let response = await axios.get("/api/total_amount");
   total_amount.value = response.data.orders
 };
+
+const getReports =  async () =>{
+  let response = await axios.get("/api/reports");
+  console.log(response.data);
+}
 
 const total = () => {
   let result = 0;
@@ -93,6 +98,8 @@ const getUser = async () => {
           </div>
         </div>
       </div>
+
+      <Chart />
 
       <div class="overView">
         <h1>Latest Products</h1>
