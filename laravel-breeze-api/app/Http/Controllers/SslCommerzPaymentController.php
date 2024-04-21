@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use DB;
+
 use Illuminate\Http\Request;
 use App\Library\SslCommerz\SslCommerzNotification;
+use Illuminate\Support\Facades\DB ;
 
 class SslCommerzPaymentController extends Controller
 {
@@ -19,7 +20,7 @@ class SslCommerzPaymentController extends Controller
         return view('exampleHosted');
     }
 
-    public function index(Request $request)
+    public function index()
     {
         # Here you have to receive all the order data to initate the payment.
         # Let's say, your oder transaction informations are saving in a table called "orders"
@@ -64,7 +65,7 @@ class SslCommerzPaymentController extends Controller
         $post_data['value_d'] = "ref004";
 
         #Before  going to initiate the payment order status need to insert or update as Pending.
-        $update_product = DB::table('orders')
+        $update_product = DB::table('orders_payment')
             ->where('transaction_id', $post_data['tran_id'])
             ->updateOrInsert([
                 'name' => $post_data['cus_name'],
