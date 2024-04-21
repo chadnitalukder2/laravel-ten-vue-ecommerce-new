@@ -11,15 +11,33 @@ const router = useRouter();
 const form = ref([]);
 const products = ref([]);
 const deleteVisibleId = ref(null);
+const pagination = ref({
+    current_page: 1,
+    last_page: 1,
+    per_page: 10,
+    total: 1,
+});
 //----------------------------------
 onMounted(async () => {
   getProduct();
 });
 
 const getProduct = async () => {
-  let response = await axios.get("/api/get_product");
+  let response = await axios.get("/api/get_product", { params: { pagination: pagination.value } }).then((response) => {
+        products.value = response.data.products.data;
+        console.log("response", response.data.products);
+        pagination.value = {
+            current_page: response.data.products.current_page,
+            last_page: response.data.products.last_page,
+            per_page: response.data.products.per_page,
+            total: response.data.products.total,
+        };
+    });
+};
 
-  products.value = response.data.products.data;
+const getPaginateData = (page) => {
+    pagination.value.current_page = page;
+    getProduct();
 };
 
 const deleteProduct = (id) => {
@@ -42,6 +60,8 @@ const closeModalDelete = () => {
 </script>
 
 <template>
+  <div>
+    
   <table id="customers">
     <tr>
       <th># ID</th>
@@ -108,6 +128,16 @@ const closeModalDelete = () => {
       </tr>
     </tbody>
   </table>
+  <div class="pagination">
+      <p v-for="pageNumber in pagination.last_page"
+      :key="pageNumber"
+      :class="{ 'active': pageNumber === pagination.current_page }"
+      @click="getPaginateData(pageNumber)"
+      >
+          {{ pageNumber }}
+      </p>
+  </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -161,4 +191,26 @@ table {
   background-color: rgb(237 236 236 / 68%);
   color: #444;
 }
+
+.pagination {
+  display: flex;
+  margin-left: 38%;
+}
+
+.pagination p {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.pagination p.active {
+  background-color: #62c7af;
+  color: white;
+  border: 1px solid #62c7af;
+}
+.pagination a:hover:not(.active) {background-color: #ddd;}
 </style>

@@ -132,14 +132,14 @@ const getBrand = async () => {
         </div>
       
         <div class="pagination">
-        <p v-for="pageNumber in pagination.last_page"
-        :key="pageNumber"
-        :class="{ 'active': pageNumber === pagination.current_page }"
-        @click="getPaginateData(pageNumber)"
-        >
-            {{ pageNumber }}
-        </p>
-</div>
+            <p v-for="pageNumber in pagination.last_page"
+            :key="pageNumber"
+            :class="{ 'active': pageNumber === pagination.current_page }"
+            @click="getPaginateData(pageNumber)"
+            >
+                {{ pageNumber }}
+            </p>
+        </div>
     </div>
 </div>
 </template>
