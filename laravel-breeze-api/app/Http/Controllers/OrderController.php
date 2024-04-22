@@ -50,7 +50,7 @@ class OrderController extends Controller
                     throw new \Exception("Product quantity is too much. Please check the quantity and try again.");
                 }
                 $sslCommerz = new SslCommerzPaymentController();
-                $sslCommerz->index($request);
+                $payment_redirect_url =  $sslCommerz->index($request);
             }
 
             DB::commit();
@@ -61,7 +61,10 @@ class OrderController extends Controller
         }
         
     
-        return response()->json(['message' => 'orders added successfully'], 201);
+        return response()->json([
+            'message' => 'orders added successfully',
+            'payment_redirect_url' => $payment_redirect_url
+        ], 201);
     }
 
 

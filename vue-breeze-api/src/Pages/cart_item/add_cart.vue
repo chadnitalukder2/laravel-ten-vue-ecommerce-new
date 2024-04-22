@@ -93,7 +93,12 @@ const addOrders = async () => {
         title: "Order Placed Successfully",
         type: "success",
       });
-      getOrderItem();
+
+      let parse_url = JSON.parse(res.data.payment_redirect_url);
+      if (parse_url.status == "success") {
+        window.location.replace(parse_url.data);
+      }
+
     } else {
       notify({
         title: "Order Placed Failed",
