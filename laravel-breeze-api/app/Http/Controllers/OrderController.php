@@ -51,7 +51,6 @@ class OrderController extends Controller
                 }
                 $sslCommerz = new SslCommerzPaymentController();
                 $sslCommerz->index($request);
-                
             }
 
             DB::commit();
