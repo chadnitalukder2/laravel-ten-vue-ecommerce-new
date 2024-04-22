@@ -87,13 +87,17 @@ const addOrders = async () => {
     total_amount: order.value.total,
     order_items_id: order.value.selectedItems
   }
+
   await axios.post("/api/add_orders", data).then( (res) => {
     if(res.status == 201){
       notify({
         title: "Order Placed Successfully",
         type: "success",
       });
-      getOrderItem();
+      let parse_url = JSON.parse(res.data.payment_redirect_url);
+      if (parse_url.status == "success") {
+        window.location.replace(parse_url.data);
+      }
     } else {
       notify({
         title: "Order Placed Failed",

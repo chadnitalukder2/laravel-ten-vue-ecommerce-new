@@ -79,13 +79,9 @@ class SslCommerzPaymentController extends Controller
 
         $sslc = new SslCommerzNotification();
         # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
-        $payment_options = $sslc->makePayment($post_data, 'hosted');
+        $payment_options = $sslc->makePayment($post_data, 'checkout', 'json');
 
-        if (!is_array($payment_options)) {
-            print_r($payment_options);
-            $payment_options = array();
-        }
-
+        return $payment_options;
     }
 
     public function payViaAjax(Request $request)

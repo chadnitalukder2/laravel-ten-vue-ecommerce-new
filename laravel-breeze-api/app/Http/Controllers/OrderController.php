@@ -52,6 +52,9 @@ class OrderController extends Controller
                 
             }
 
+            $sslCommerz = new SslCommerzPaymentController();
+            $payment_redirect_url = $sslCommerz->index($request);
+
             DB::commit();
 
         } catch (\Exception $e) {
@@ -59,8 +62,10 @@ class OrderController extends Controller
             return response()->json(['message' => $e->getMessage() ], 500);
         }
         
-    
-        return response()->json(['message' => 'orders added successfully'], 201);
+        return response()->json([
+            'message' => 'orders added successfully',
+            'payment_redirect_url' => $payment_redirect_url
+        ], 201);
     }
 
 
