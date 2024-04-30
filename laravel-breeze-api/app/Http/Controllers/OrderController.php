@@ -49,6 +49,8 @@ class OrderController extends Controller
                 } else {
                     throw new \Exception("Product quantity is too much. Please check the quantity and try again.");
                 }
+                $sslCommerz = new SslCommerzPaymentController();
+                $payment_redirect_url =  $sslCommerz->index($orders);
                 
             }
 

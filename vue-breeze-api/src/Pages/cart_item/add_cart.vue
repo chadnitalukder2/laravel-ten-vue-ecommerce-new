@@ -13,6 +13,7 @@ const route = useRoute()
 
 //----------------------------------------------------
 const orderItem = ref([]);
+let loading = ref(false);
 const order = ref({
   selectedItems: [],
   sub_total: 0,
@@ -87,8 +88,9 @@ const addOrders = async () => {
     total_amount: order.value.total,
     order_items_id: order.value.selectedItems
   }
-
+  loading.value = true;
   await axios.post("/api/add_orders", data).then( (res) => {
+    loading.value = false;
     if(res.status == 201){
       notify({
         title: "Order Placed Successfully",
@@ -117,7 +119,10 @@ const addOrders = async () => {
 </script>
 
 <template>
-  <div class="container"> 
+  <div v-if="loading" class="loader-container">
+    <div id="loading"></div>
+  </div>
+  <div v-else  class="container"> 
     <div class="table" style="padding-bottom: 85px">
       <table>
         <tr>
@@ -460,6 +465,42 @@ td{
                 }
             }
         }
+    }
+
+    .loader-container {
+      width: 100%;
+      display: flex;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+
+      @import url(https://fonts.googleapis.com/css?family=Roboto:100);
+
+body { margin-top: 100px; background-color: #137b85; color: #fff; text-align:center; }
+
+h1 {
+  font: 2em 'Roboto', sans-serif;
+  margin-bottom: 40px;
+}
+
+#loading {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgb(0 150 136 / 40%);
+    border-radius: 50%;
+    border-top-color: #009688;
+    animation: spin-e4b13392 1s ease-in-out infinite;
+    -webkit-animation: spin-e4b13392 1s ease-in-out infinite;
+}
+
+
+@keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}
     }
 
 </style>
