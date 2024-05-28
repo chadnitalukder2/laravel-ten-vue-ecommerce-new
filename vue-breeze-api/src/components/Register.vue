@@ -18,7 +18,7 @@ const { notify } = useNotification();
   const clearValidationMessage = (field) => {
   setTimeout(() => {
     validation.value[field] = '';
-  }, 5000); // Set the timeout duration in milliseconds (e.g., 5000 for 5 seconds)
+  }, 3000); // Set the timeout duration in milliseconds (e.g., 5000 for 5 seconds)
 }
   //---------------------------------------------------
   const validateEmail = (email) => {

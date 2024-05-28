@@ -77,7 +77,7 @@ const closeModalDelete = () => {
           <tr>
             <td># {{ item.id }}</td>
             <td>{{ item.brand_name }}</td>
-            <td style="width: 120px; height: 100px">
+            <td style="width: 40px; height: 40px">
               <img :src="item.brand_img" style="width: 100%; height: 100%" />
             </td>
             <td
@@ -161,7 +161,7 @@ table {
 #customers td,
 #customers th {
   border: 1px solid #f3ededad;
-  padding: 15px 15px;
+  padding: 8px 8px;
   text-align: left;
 }
 
@@ -170,8 +170,8 @@ table {
 }
 
 #customers th {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   text-align: left;
   background-color: rgb(237 236 236 / 68%);
   color: #444;

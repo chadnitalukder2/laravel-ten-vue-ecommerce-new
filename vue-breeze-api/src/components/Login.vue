@@ -37,8 +37,8 @@ const handleLogin = async () => {
     validation.value.email = "Email is required and must be a valid email address";
     clearValidationMessage('email');
   }
-  if (form.value.password === "" || form.value.password.length < 6) {
-    validation.value.password = "Password is required and must be at least 6 characters long";
+  if (form.value.password === "" || form.value.password.length < 8) {
+    validation.value.password = "Password is required and must be at least 8 characters long";
     clearValidationMessage('password');
   } else {
     await getToken();

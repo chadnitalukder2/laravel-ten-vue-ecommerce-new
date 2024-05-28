@@ -1,33 +1,25 @@
 <script setup>
-import { useNotification } from "@kyvg/vue3-notification";
-const { notify } = useNotification();
 import Modal from "../../../components/global/Modal.vue";
-
-import { ref, onMounted } from "vue";
 import axios from "axios";
+import { ref , onMounted} from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
-//---------------------------------------------------
-const user = ref([]);
+
+const contacts = ref([]);
 const deleteVisibleId = ref(null);
-//---------------------------------------------------
+
 onMounted(async () => {
-  getUser();
+  getContact();
 });
-//---------------------------------------------------
-const getUser = async () => {
-  let response = await axios.get("/api/get_user");
-  user.value = response.data.user;
-  // console.log("response", response.data.user);
+
+const getContact = async () => {
+  let response = await axios.get("/api/get_contact");
+    contacts.value = response.data.contacts;
 };
-//---------------------------------------------------
-const deleteUser = (id) => {
-  axios.get(`/api/delete_user/${id}`).then(() => {
-    notify({
-      title: "User Deleted",
-      type: "success",
-    });
-    getUser();
+
+const deleteContact = (id) => {
+  axios.get(`/api/delete_contact/${id}`).then(() => {
+    getContact();
   });
 };
 //---------------------------------------------------
@@ -37,23 +29,24 @@ const openModalDelete = (id) => {
 const closeModalDelete = () => {
     deleteVisibleId.value =null;
 };
-//--------------------------------------------
 </script>
 
 <template>
-  <div class="container">
-    <div class="table-box">
-      <h1>All User</h1>
+  <div class="container" style="flex: auto;">
+    <div class="table-box" >
+      <h1>All Contact Data</h1>
       <table id="customers">
         <tr>
-          <th># ID</th>
-          <th>User Name</th>
-          <th>User Email</th>
-          <th>Role</th>
+          <th>#ID</th>
+          <th>Name </th>
+          <th>Email </th>
+          <th>Phone </th>
+          <th>Address</th>
+          <th>Message </th>
           <th>Action</th>
         </tr>
-        <tbody v-for="item in user" :key="item.id">
-          <Modal :show="deleteVisibleId === item.id" @close="closeModalDelete">
+        <tbody  v-for="item in contacts" :key="item.id">
+           <Modal :show="deleteVisibleId === item.id" @close="closeModalDelete">
                     <div id="myModal" style="text-align: center;">
                         <h4 style="margin-top: 20px; font-size: 26px; color: #636363; font-weight: 500;">Are you sure?</h4>
                         <div class="modal-body">
@@ -61,24 +54,19 @@ const closeModalDelete = () => {
                         </div>
                         <div class="modal_footer" style="padding: 20px;" >
                             <!-- <button @close="closeModalDelete" type="button" class="secondary" >Cancel</button> -->
-                            <button @click="deleteUser(item.id)" type="button" style="background: #f15e5e;">Delete</button>
+                            <button @click="deleteContact(item.id)" type="button" style="background: #f15e5e;">Delete</button>
                         </div>   
                     </div>  
            </Modal>
           <tr>
-            <td style="color: blue">
-              <router-link :to="{ name: 'edit-user', params: { id: item.id } }"
-                ># {{ item.id }}
-              </router-link>
-            </td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.email }}</td>
-            <td>{{ item.role }}</td>
-            <td
-            @click="openModalDelete(item.id)"
-              style="color: red; cursor: pointer"
-            >
-              <span>Delete</span>
+            <td>{{ item.id }}</td>
+            <td> {{ item.name }}</td>
+            <td> {{ item.email }}</td>
+            <td> {{ item.phone }}</td>
+            <td> {{ item.address }}</td>
+            <td> {{ item.message }}</td>
+            <td>
+            <span  @click="openModalDelete(item.id)" style="background: red; margin-right: 5px; cursor: pointer;">Delete</span>
             </td>
           </tr>
         </tbody>
@@ -88,7 +76,6 @@ const closeModalDelete = () => {
 </template>
 
 <style lang="scss" scoped>
-
 #myModal{
 .modal_footer{
   button{
@@ -111,9 +98,10 @@ const closeModalDelete = () => {
  
 }
 h1 {
-    margin-top: 0px;
-    font-size: 25px;
-    color: #444;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #444;
 }
 table {
   border-radius: 6px;
@@ -121,12 +109,35 @@ table {
 }
 
 .container {
-  margin: auto;
   width: 100%;
+  background: #f5f5f780;
 }
 .table-box {
   padding: 50px;
   border-radius: 8px;
+
+  .btn {
+    text-align: right;
+    padding-bottom: 10px;
+  
+      a {
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 500;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 6px;
+        border: 1px solid #ff6b00;
+        background: #ff6b00;
+        transition: all .3s;
+      }
+      a:hover{
+         color: #ff6b00;
+         background: #fff;
+         border: 1px solid #ff6b00;
+      }
+
+  }
 }
 
 #customers {
@@ -137,8 +148,8 @@ table {
 
 #customers td,
 #customers th {
-  border: 1px solid #f3ededad;
-  padding: 15px 15px;
+  border: 1px solid rgba(0, 0, 0, 0.085);
+  padding: 10px 10px;
   text-align: left;
 }
 
@@ -147,10 +158,20 @@ table {
 }
 
 #customers th {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   text-align: left;
   background-color: rgb(237 236 236 / 68%);
   color: #444;
+}
+td{
+span, a{
+        text-decoration: none;
+        background: skyblue;
+        padding: 6px 12px;
+        border-radius: 6px;
+        color: #0e0d0d;
+        font-weight: 600;
+    }
 }
 </style>

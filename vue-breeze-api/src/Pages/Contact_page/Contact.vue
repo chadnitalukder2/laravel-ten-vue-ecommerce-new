@@ -4,8 +4,21 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 const router = useRouter();
 
+const form = ref([]);
 
 
+const addContact = async () => {
+   const formData = new FormData();
+  formData.append("name", form.value.name);
+  formData.append("email", form.value.email);
+    formData.append("phone", form.value.phone);
+  formData.append("address", form.value.address);
+  formData.append("message", form.value.message);
+
+  console.log({ formData });
+  let response = await axios.post("/api/add_contact", formData);
+  form.value = '';
+};
 
 </script>
 
@@ -14,26 +27,26 @@ const router = useRouter();
         <h1>Contact Page</h1>
         <hr style="border: 1px solid rgb(0, 150, 136); width: 25%; margin-bottom: 40px;">
         <div style="background:#fff ; width: 70%; margin: 0 auto; padding: 35px; box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.1); border-radius: 5px;">
-            <form @submit.prevent="addMsg">
+            <form @submit.prevent="addContact">
             <div class="contact_page" >
                 <div class="contact_page_left" style="flex-basis: 50%;">
                     <div class="contact_info" >
                         <label style="font-weight: bold;">Name : </label>
-                        <input type="text" placeholder="enter your name" v-model="name">
+                        <input type="text" v-model="form.name" placeholder="enter your name" >
                     </div>
                     <div class="contact_info">
                         <label style="font-weight: bold;">Phone : </label>
-                        <input type="number" placeholder="enter your name">
+                        <input type="number" v-model="form.phone" placeholder="enter your name">
                     </div>
                 </div>
                 <div class="contact_page_right" style="flex-basis: 50%;">
                     <div class="contact_info">
                     <label style="font-weight: bold;">Email : </label>
-                    <input type="email" placeholder="enter your name">
+                    <input type="email" v-model="form.email" placeholder="enter your name">
                 </div>
                 <div class="contact_info">
                     <label style="font-weight: bold;">Address : </label>
-                    <textarea type="text" placeholder="enter your address"></textarea>
+                    <textarea type="text" v-model="form.address" placeholder="enter your address"></textarea>
                 </div>
                 </div>
 
@@ -41,7 +54,7 @@ const router = useRouter();
             
             <div class="contact_info" style="text-align: left; padding-bottom: 0px;">
                 <label style="font-weight: bold;">Message : </label>
-                <textarea type="text" placeholder="enter your massage" rows="5"></textarea>
+                <textarea type="text" v-model="form.message" placeholder="enter your massage" rows="5"></textarea>
             </div>
 
             <div style="text-align: left; padding-top: 25px;">

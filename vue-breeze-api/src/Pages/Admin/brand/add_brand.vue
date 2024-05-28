@@ -18,12 +18,11 @@ const handleFileChange = async (event) => {
 const addBrand = async () => {
   if (!brandInput.value.brand_name) {
     showError.value = true;
-    showError.value = 'Brand name is required';
+    showError.value = "Brand name is required";
     console.log("hi");
     return;
   }
 
-  
   const formData = new FormData();
   formData.append("brand_name", brandInput.value.brand_name);
   formData.append("brand_img", image.value);
@@ -49,7 +48,8 @@ const addBrand = async () => {
           placeholder="Enter User Email"
           name="uname"
         />
-        <p style="margin: 0px; color: red; font-size: 14px;" >{{ showError }}</p><br>
+        <p style="margin: 0px; color: red; font-size: 14px">{{ showError }}</p>
+        <br />
 
         <label for="psw"><b>Brand Image</b></label>
         <input
@@ -57,9 +57,7 @@ const addBrand = async () => {
           type="file"
           placeholder="Product Image"
           name="psw"
-          
         />
-        
 
         <button type="submit">Add Brand</button>
       </div>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\OrderItemsController;
 use App\Http\Controllers\OrderController;
@@ -67,3 +68,9 @@ Route::get('/delete_Order/{id}', [OrderItemsController::class, 'delete_Order']);
 Route::get('/get_order_details', [OrderController::class, 'get_order_details']);
 
 Route::get('/reports', [ReportController::class, 'getReports']);
+
+Route::controller(ContactController::class)->group(function () {
+    Route::get('/get_contact', 'getContact')->name('get_contact');
+    Route::post('/add_contact', 'addContact')->name('add_contact');
+    Route::get('/delete_contact/{id}', 'deleteContact')->name('delete_contact');
+});
