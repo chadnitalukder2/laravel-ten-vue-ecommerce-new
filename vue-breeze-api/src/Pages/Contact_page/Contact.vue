@@ -1,4 +1,6 @@
 <script setup>
+import { useNotification } from "@kyvg/vue3-notification";
+const { notify } = useNotification();
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
@@ -16,8 +18,13 @@ const addContact = async () => {
   formData.append("message", form.value.message);
 
   console.log({ formData });
-  let response = await axios.post("/api/add_contact", formData);
-  form.value = '';
+  let response = await axios.post("/api/add_contact", formData).then(() => {
+    notify({
+      title: "Message Send Successfully",
+      type: "success",
+    });
+    form.value = '';
+  });
 };
 
 </script>
