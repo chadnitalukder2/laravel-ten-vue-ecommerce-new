@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderConfirm;
 use App\Models\Order;
 use App\Models\OrderItems;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -63,6 +65,19 @@ class OrderController extends Controller
             DB::rollback();
             return response()->json(['message' => $e->getMessage() ], 500);
         }
+
+        //Start Send Email
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'total_amount' => $request->total_amount,
+            'user_id' => Auth::user()->id,
+        ];
+        Mail::to('chadnitalukder2@gmail.com')->send(new OrderConfirm($data));
+
+      //End Send Email
         
         return response()->json([
             'message' => 'orders added successfully',

@@ -151,6 +151,7 @@ const addOrderItem = async () => {
                             <div class="select-size">
                                 <label  style="color: rgb(8 13 16); font-weight: 800; font-size: 16px;" >Sizes : </label>
                                 <select v-model="orderItem.size" class="product-control">
+                                    <option disabled selected="">Select Size</option>
                                     <option v-for="product_size in product.product_sizes" :key="product_size.id">
                                         {{product_size }}
                                     </option>
@@ -159,6 +160,7 @@ const addOrderItem = async () => {
                             <div class="select-size">
                                 <label style="color: rgb(8 13 16); font-weight: 800; font-size: 16px;">Colors : </label>
                                 <select v-model="orderItem.color"  class="product-control">
+                                    <option disabled selected >Select Color</option>
                                     <option v-for="product_color in product.product_colors" :key="product_color.id">
                                         {{ product_color }}
                                     </option>
